@@ -14,6 +14,7 @@ import sys
 import zipfile
 import getpass
 import re
+import os
 
 STUDENT_REPO_PATH = pathlib.Path(__file__).absolute().parent.resolve()
 TEST_REPO_PATH = (STUDENT_REPO_PATH / "test_repo").resolve()
@@ -104,7 +105,11 @@ def get_files_to_copy_and_zip(lab):
         files.append((src_lab_path / "main/missile.c", dest_lab_path / "main", True))
         files.append((src_lab_path / "main/plane.c", dest_lab_path / "main", True))
     elif lab == "lab06":
-        None
+        # Add all files in path
+        with os.scandir(src_lab_path) as it:
+            for entry in it:
+                if entry.name != "build": # skip the "build" directory
+                    files.append((src_lab_path / entry.name, dest_lab_path / entry.name, True))
 
     if USE_TEST_REPO:
         print(

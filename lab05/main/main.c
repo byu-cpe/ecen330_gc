@@ -42,7 +42,6 @@ void cursor(int32_t x, int32_t y, uint16_t color)
 	lcdDrawVLine(&dev, x,    y-s2, CURSOR_SZ, color);
 }
 
-
 // Test application
 void app_main(void)
 {

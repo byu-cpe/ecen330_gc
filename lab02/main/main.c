@@ -56,6 +56,7 @@ bool out_pin[PIN_MAX] = {
 
 bool pin_state[PIN_MAX];
 
+// Draw a panel indicating the state of the I/O pins on the display
 void draw_panel(TFT_t *dev)
 {
 	for (uint32_t i = 0; i < PIN_MAX; i++) {
@@ -76,6 +77,7 @@ void draw_panel(TFT_t *dev)
 	}
 }
 
+// Update the state of the I/O pins on the display
 void update_panel(TFT_t *dev)
 {
 	static bool p26 = false;
@@ -104,6 +106,7 @@ void update_panel(TFT_t *dev)
 	}
 }
 
+// Main application
 void app_main(void)
 {
 	TFT_t dev;

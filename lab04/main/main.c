@@ -71,7 +71,7 @@ int32_t dcx, dcy;
 uint32_t vol;
 tone_t tone;
 
-
+// Draw the cursor on the display
 void cursor(int32_t x, int32_t y, uint16_t color)
 {
 	int32_t s2 = CUR_SZ >> 1; // size div 2
@@ -79,6 +79,7 @@ void cursor(int32_t x, int32_t y, uint16_t color)
 	lcdDrawVLine(&dev, x,    y-s2, CUR_SZ, color);
 }
 
+// Draw the status bar at the top of the display
 void draw_status(void)
 {
 	char str[28];
@@ -87,6 +88,7 @@ void draw_status(void)
 	lcdDrawString(&dev, 0, 0, str, STB_CL);
 }
 
+// Update the position of the cursor and sound a tone if BTN_A is pressed
 void update(TimerHandle_t pxTimer)
 {
 	static int32_t lx = -1, ly = -1;
@@ -119,7 +121,7 @@ void update(TimerHandle_t pxTimer)
 	}
 }
 
-
+// Main application
 void app_main(void)
 {
 	ESP_LOGI(TAG, "Start up");

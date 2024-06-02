@@ -43,4 +43,4 @@ void cursor_set_threshold(float thr);
 // *y: pointer to y coordinate.
 void cursor_get_pos(int32_t *x, int32_t *y);
 
-#endif /* CURSOR_H_ */
+#endif // CURSOR_H_

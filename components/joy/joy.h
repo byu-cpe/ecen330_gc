@@ -25,4 +25,4 @@ int32_t joy_deinit(void);
 // *dcy: pointer to displacement in y.
 void joy_get_displacement(int32_t *dcx, int32_t *dcy);
 
-#endif /* JOY_H_ */
+#endif // JOY_H_

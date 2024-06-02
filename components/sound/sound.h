@@ -41,4 +41,4 @@ void sound_set_volume(uint32_t vol);
 // enable: if true, enable sound, otherwise disable.
 void sound_device(bool enable);
 
-#endif /* SOUND_H_ */
+#endif // SOUND_H_

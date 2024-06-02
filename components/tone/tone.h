@@ -34,4 +34,4 @@ int32_t tone_deinit(void);
 // freq: frequency of the tone in Hz.
 void tone_start(tone_t tone, uint32_t freq);
 
-#endif /* TONE_H_ */
+#endif // TONE_H_
