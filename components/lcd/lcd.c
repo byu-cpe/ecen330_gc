@@ -224,6 +224,7 @@ inline static bool spi_master_write_color(TFT_t *dev, uint16_t color, size_t siz
 	for (size_t i = 0; i < n; i++) buffer[i] = temp;
 	gpio_set_level(dev->_dc, SPI_Data_Mode);
 	while (size) {
+		n = (size < BUF_LEN) ? size : BUF_LEN;
 		spi_master_write_bytes(dev->_SPIHandle, (uint8_t *)buffer, n*sizeof(uint16_t));
 		size -= n;
 	}
@@ -231,7 +232,7 @@ inline static bool spi_master_write_color(TFT_t *dev, uint16_t color, size_t siz
 }
 
 #if 0 // original
-static bool spi_master_write_color(TFT_t *dev, uint16_t color, uint16_t size)
+inline static bool spi_master_write_color(TFT_t *dev, uint16_t color, uint16_t size)
 {
 	static uint8_t Byte[1024];
 	int32_t index = 0;
@@ -245,7 +246,7 @@ static bool spi_master_write_color(TFT_t *dev, uint16_t color, uint16_t size)
 #endif
 
 #if 0 // slow
-static bool spi_master_write_color(TFT_t *dev, uint16_t color, uint16_t size)
+inline static bool spi_master_write_color(TFT_t *dev, uint16_t color, size_t size)
 {
 	color = SPI_SWAP_DATA_TX(color, 16);
 	gpio_set_level( dev->_dc, SPI_Data_Mode );
@@ -321,73 +322,73 @@ void lcdInit(TFT_t *dev)
 	dev->_use_frame_buffer = false;
 	dev->_frame_buffer = NULL;
 
-	spi_master_write_command(dev, 0x01);	// Software Reset
+	spi_master_write_command(dev, 0x01);	// ILI:Software Reset (01h), ST:SWRESET (01h): Software Reset
 	delayMS(5); // 150
 
-	spi_master_write_command(dev, 0x11);	// Sleep Out
+	spi_master_write_command(dev, 0x11);	// ILI:Sleep Out (11h), ST:SLPOUT (11h): Sleep Out
 	delayMS(5); // 255
 
-	spi_master_write_command(dev, 0x3A);	// Interface Pixel Format
+	spi_master_write_command(dev, 0x3A);	// ILI:COLMOD: Pixel Format Set (3Ah), ST:COLMOD (3Ah): Interface Pixel Format
 	spi_master_write_data_byte(dev, 0x55);
 	// delayMS(10);
 
-	spi_master_write_command(dev, 0x36);	// Memory Data Access Control
+	spi_master_write_command(dev, 0x36);	// ILI:Memory Access Control (36h), ST:MADCTL (36h): Memory Data Access Control
 	spi_master_write_data_byte(dev, 0x08);  // 0x00
 
-	// spi_master_write_command(dev, 0x2A);	// Column Address Set
+	// spi_master_write_command(dev, 0x2A);	// ILI:Column Address Set (2Ah), ST:CASET (2Ah): Column Address Set
 	// spi_master_write_data_byte(dev, 0x00);
 	// spi_master_write_data_byte(dev, 0x00);
 	// spi_master_write_data_byte(dev, 0x00);
 	// spi_master_write_data_byte(dev, 0xF0);
 	// spi_master_write_addr(dev, 0, width-1);
 
-	// spi_master_write_command(dev, 0x2B);	// Row Address Set
+	// spi_master_write_command(dev, 0x2B);	// ILI:Page Address Set (2Bh), ST:RASET (2Bh): Row Address Set
 	// spi_master_write_data_byte(dev, 0x00);
 	// spi_master_write_data_byte(dev, 0x00);
 	// spi_master_write_data_byte(dev, 0x00);
 	// spi_master_write_data_byte(dev, 0xF0);
 	// spi_master_write_addr(dev, 0, height-1);
 
-	spi_master_write_command(dev, 0xCF);
+	spi_master_write_command(dev, 0xCF);    // ILI:Power control B (CFh), ILI9341 only
 	spi_master_write_data_byte(dev, 0x00);
 	spi_master_write_data_byte(dev, 0xc3);
 	spi_master_write_data_byte(dev, 0x30);
-	spi_master_write_command(dev, 0xED);
+	spi_master_write_command(dev, 0xED);    // ILI:Power on sequence control (EDh), ILI9341 only
 	spi_master_write_data_byte(dev, 0x64);
 	spi_master_write_data_byte(dev, 0x03);
 	spi_master_write_data_byte(dev, 0x12);
 	spi_master_write_data_byte(dev, 0x81);
-	spi_master_write_command(dev, 0xE8);
+	spi_master_write_command(dev, 0xE8);    // ILI:Driver timing control A (E8h), ST:PWCTRL2 (E8h): Power Control 2
 	spi_master_write_data_byte(dev, 0x85);
 	spi_master_write_data_byte(dev, 0x00);
 	spi_master_write_data_byte(dev, 0x78);
-	spi_master_write_command(dev, 0xCB);
+	spi_master_write_command(dev, 0xCB);    // ILI:Power control A (CBh), ILI9341 only
 	spi_master_write_data_byte(dev, 0x39);
 	spi_master_write_data_byte(dev, 0x2c);
 	spi_master_write_data_byte(dev, 0x00);
 	spi_master_write_data_byte(dev, 0x34);
 	spi_master_write_data_byte(dev, 0x02);
-	spi_master_write_command(dev, 0xF7);
+	spi_master_write_command(dev, 0xF7);    // ILI:Pump ratio control (F7h), ILI9341 only
 	spi_master_write_data_byte(dev, 0x20);
-	spi_master_write_command(dev, 0xEA);
+	spi_master_write_command(dev, 0xEA);    // ILI:Driver timing control B (EAh), ILI9341 only
 	spi_master_write_data_byte(dev, 0x00);
 	spi_master_write_data_byte(dev, 0x00);
-	spi_master_write_command(dev, 0xC0);    // Power control
+	spi_master_write_command(dev, 0xC0);    // ILI:Power Control 1 (C0h), ST:LCMCTRL (C0h): LCM Control
 	spi_master_write_data_byte(dev, 0x1B);
-	spi_master_write_command(dev, 0xC1);    // Power control
+	spi_master_write_command(dev, 0xC1);    // ILI:Power Control 2 (C1h), ST:IDSET (C1h): ID Code Setting
 	spi_master_write_data_byte(dev, 0x12);
-	spi_master_write_command(dev, 0xC5);	// VCM control
+	spi_master_write_command(dev, 0xC5);	// ILI:VCOM Control 1(C5h), ST:VCMOFSET (C5h): VCOM Offset Set
 	spi_master_write_data_byte(dev, 0x32);
 	spi_master_write_data_byte(dev, 0x3C);
-	spi_master_write_command(dev, 0xC7);	// VCM control2
+	spi_master_write_command(dev, 0xC7);	// ILI:VCOM Control 2(C7h), ST:CABCCTRL (C7h): CABC Control
 	spi_master_write_data_byte(dev, 0x91);
-	spi_master_write_command(dev, 0xB1);	// Frame Rate Control
+	spi_master_write_command(dev, 0xB1);	// ILI:Frame Rate Control (In Normal Mode/Full Colors) (B1h), ST:RGBCTRL (B1h): RGB Interface Control
 	spi_master_write_data_byte(dev, 0x00);
 	spi_master_write_data_byte(dev, 0x10);
-	spi_master_write_command(dev, 0xB6);	// Display Function Control
+	spi_master_write_command(dev, 0xB6);	// ILI:Display Function Control (B6h), ILI9341 only
 	spi_master_write_data_byte(dev, 0x0A);
 	spi_master_write_data_byte(dev, 0xA2);
-	spi_master_write_command(dev, 0xF6);
+	spi_master_write_command(dev, 0xF6);    // ILI:Interface Control (F6h), ILI9341 only
 	spi_master_write_data_byte(dev, 0x01);
 	spi_master_write_data_byte(dev, 0x30);
 
