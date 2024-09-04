@@ -93,7 +93,9 @@ def get_files_to_copy_and_zip(lab):
         # files.append((src_lab_path / "main/main.c", dest_lab_path / "main", True))
         # files.append((src_libs_path / "pin", dest_libs_path, True))
         # files.append((src_lab_path / "main", dest_lab_path, True))
-    if lab == "lab02":
+    if lab == "lab01":
+        files.append((src_lab_path / "main/main.c", dest_lab_path / "main", True))
+    elif lab == "lab02":
         files.append((src_libs_path / "pin/pin.c", dest_libs_path / "pin", True))
     elif lab == "lab03":
         files.append((src_lab_path / "main/main.c", dest_lab_path / "main", True))
@@ -101,10 +103,12 @@ def get_files_to_copy_and_zip(lab):
         files.append((src_libs_path / "joy/joy.c", dest_libs_path / "joy", True))
         files.append((src_libs_path / "tone/tone.c", dest_libs_path / "tone", True))
     elif lab == "lab05":
+        files.append((src_lab_path / "main/main.c", dest_lab_path / "main", True))
+    elif lab == "lab06":
         files.append((src_lab_path / "main/gameControl.c", dest_lab_path / "main", True))
         files.append((src_lab_path / "main/missile.c", dest_lab_path / "main", True))
         files.append((src_lab_path / "main/plane.c", dest_lab_path / "main", True))
-    elif lab == "lab06":
+    elif lab == "lab07":
         # Add all files in path
         with os.scandir(src_lab_path) as it:
             for entry in it:
@@ -245,6 +249,7 @@ def main():
             "lab04",
             "lab05",
             "lab06",
+            "lab07",
         ],
     )
     parser.add_argument(
