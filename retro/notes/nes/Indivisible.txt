@@ -1,0 +1,31 @@
+Join Ajna as she battles through forgotten temples in search of her tapir, Roti!
+
+This is an actual NES ROM demaking the Indivisible Prototype by Lab Zero Games. This is a fan game. It is not sponsored by 505 Games or Lab Zero Games. To find news about the game this is based on, visit: http://www.indivisiblegame.com/
+
+To support the original game, visit: https://www.indiegogo.com/projects/indivisible-rpg-from-the-creators-of-skullgirls#/
+
+This game requires an NES emulator. If you're new to emulation, details for getting set up can be found in "Emulator Setup.txt".
+
+Controls:
+
+A Button: Jump/Wall Jump (Press A when facing and close to a wall while airborne)
+B Button: Attack/Axe Hang (Press and hold B when facing and close to a wall while airborne with the axe equipped)
+Left/Right: Move Left/Right
+Down: Hold while grounded to crouch
+Hold Down while grounded, then press B: Crouching attack
+Start: Pause/Unpause the game
+Select: Switch attack type
+
+Press A after the crouching axe attack hits something: Cancel the end of the animation with a jump
+Press Left, quickly release and then quickly press and hold Left: Dash left
+	(Alternatively, hold Left for a few seconds)
+Press Right, quickly release and then quickly press and hold Right: Dash right
+	(Alternatively, hold Right for a few seconds)
+	
+My Twitter: https://twitter.com/kasumidirect
+
+Support me (Potentially inactive on release day):
+https://ko-fi.com/kasumi
+https://www.patreon.com/Kasumi
+
+A devlog of sorts: http://skullgirls.com/forums/index.php?threads/indivisible-on-nes-playable-rom-inside-image-heavy.8488/

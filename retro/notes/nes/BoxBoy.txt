@@ -1,0 +1,39 @@
+############
+#  BoXBoY  #
+############
+
+A 4kb NES game for the 2003 MiniGames Compo (www.ffd2.com/minigame/)
+Created by Neal Tew (loopy at mm dot st)
+
+
+How to play:
+-----------
+
+Arrange the colored boxes in the correct order!
+Complete ten color sets to advance to the next level!
+Finish all 6 levels to win the game!
+
+Controls:
+--------
+
+D-pad:       Move up, down, left, right (duh)
+B button:    Drop box to lower platform
+A button:    Toss box to higher platform
+Start:       Pause the game
+Select:      Faster!
+
+Emulators:
+---------
+
+This should run in most "Good" emulators (i.e. NOT Nesticle).
+It's been tested on:
+
+- Nintendulator
+- FCE Ultra
+- Nesten
+- Nestopia
+- Nester
+- Jnes
+- LoopyNES
+
+<EOF>

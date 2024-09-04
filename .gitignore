@@ -1,0 +1,11 @@
+# Temporary software files
+build
+sdkconfig
+*.o
+a.out
+
+# Zip files
+*.zip
+
+# Other
+*.dump

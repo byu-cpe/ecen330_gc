@@ -1,0 +1,274 @@
+########## run 2024-08-17 ##########
+I (31) boot: ESP-IDF v5.2.1 2nd stage bootloader
+I (31) boot: compile time Aug 17 2024 11:42:05
+I (31) boot: Multicore bootloader
+I (35) boot: chip revision: v3.0
+I (39) boot.esp32: SPI Speed      : 40MHz
+I (44) boot.esp32: SPI Mode       : DIO
+I (48) boot.esp32: SPI Flash Size : 4MB
+I (53) boot: Enabling RNG early entropy source...
+I (58) boot: Partition Table:
+I (62) boot: ## Label            Usage          Type ST Offset   Length
+I (69) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (77) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (84) boot:  2 factory          factory app      00 00 00010000 00100000
+I (92) boot: End of partition table
+I (96) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=2f5c4h (193988) map
+I (171) esp_image: segment 1: paddr=0003f5ec vaddr=3ffb0000 size=00a2ch (  2604) load
+I (172) esp_image: segment 2: paddr=00040020 vaddr=400d0020 size=19f64h (106340) map
+I (213) esp_image: segment 3: paddr=00059f8c vaddr=3ffb0a2c size=016b4h (  5812) load
+I (215) esp_image: segment 4: paddr=0005b648 vaddr=40080000 size=0dabch ( 55996) load
+I (247) boot: Loaded app from partition at offset 0x10000
+I (248) boot: Disabling RNG early entropy source...
+I (259) cpu_start: Multicore app
+I (268) cpu_start: Pro cpu start user code
+I (268) cpu_start: cpu freq: 240000000 Hz
+I (268) cpu_start: Application information:
+I (271) cpu_start: Project name:     lcd_test
+I (276) cpu_start: App version:      8512cf0-dirty
+I (281) cpu_start: Compile time:     Aug 17 2024 11:41:30
+I (287) cpu_start: ELF file SHA256:  65780ae73...
+I (293) cpu_start: ESP-IDF:          v5.2.1
+I (298) cpu_start: Min chip rev:     v0.0
+I (302) cpu_start: Max chip rev:     v3.99
+I (307) cpu_start: Chip rev:         v3.0
+I (312) heap_init: Initializing. RAM available for dynamic allocation:
+I (319) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM
+I (325) heap_init: At 3FFB2D90 len 0002D270 (180 KiB): DRAM
+I (331) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM
+I (338) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
+I (344) heap_init: At 4008DABC len 00012544 (73 KiB): IRAM
+I (351) spi_flash: detected chip: generic
+I (355) spi_flash: flash io: dio
+I (359) main_task: Started on CPU0
+I (369) main_task: Calling app_main()
+I (369) lcd_test: Start up
+I (369) lcd: GPIO_BL=14
+I (369) gpio: GPIO[14]| InputEn: 0| OutputEn: 0| OpenDrain: 0| Pullup: 1| Pulldown: 0| Intr:0
+I (379) lcd: GPIO_CS=5
+I (379) gpio: GPIO[5]| InputEn: 0| OutputEn: 0| OpenDrain: 0| Pullup: 1| Pulldown: 0| Intr:0
+I (389) lcd: GPIO_DC=4
+I (389) gpio: GPIO[4]| InputEn: 0| OutputEn: 0| OpenDrain: 0| Pullup: 1| Pulldown: 0| Intr:0
+I (399) lcd: GPIO_RST=-1
+I (409) lcd: GPIO_MOSI=23
+I (409) lcd: GPIO_SCLK=18
+I (419) lcd: Enable Display Inversion
+I (479) lcd_test_colorBar: elapsed time[us]:32620
+I (2539) lcd_test_colorBand: elapsed time[us]:33492
+I (5049) lcd_test_fillScreen: elapsed time[us]:518615
+I (7089) lcd_test_drawHVLine: elapsed time[us]:10312
+I (9519) lcd_test_drawLine: elapsed time[us]:404666
+I (11559) lcd_test_drawRect: elapsed time[us]:13256
+I (13629) lcd_test_fillRect: elapsed time[us]:46375
+I (16839) lcd_test_drawTriangle: elapsed time[us]:1179520
+I (19939) lcd_test_fillTriangle: elapsed time[us]:1071667
+I (22519) lcd_test_drawCircle: elapsed time[us]:554094
+I (25129) lcd_test_fillCircle: elapsed time[us]:578051
+I (27379) lcd_test_drawRoundRect: elapsed time[us]:218843
+I (29829) lcd_test_fillRoundRect: elapsed time[us]:423541
+I (31959) lcd_test_drawArrow: elapsed time[us]:101864
+I (34019) lcd_test_fillArrow: elapsed time[us]:29326
+I (37009) lcd_test_drawBitmap: elapsed time[us]:964448
+I (41729) lcd_test_drawRGBBitmap: elapsed time[us]:2726676
+I (43799) lcd_test_drawRect2: elapsed time[us]:43374
+I (46219) lcd_test_fillRect2: elapsed time[us]:394802
+I (48409) lcd_test_drawRoundRect2: elapsed time[us]:163919
+I (50839) lcd_test_fillRoundRect2: elapsed time[us]:397571
+I (53839) lcd_test_drawRectC: elapsed time[us]:967733
+I (56949) lcd_test_drawTriangleC: elapsed time[us]:1085010
+I (59059) lcd_test_drawRegularPolygonC: elapsed time[us]:81537
+I (62249) lcd_test_drawString: elapsed time[us]:1158677
+I (64289) lcd_test_setFontDirection: elapsed time[us]:12786
+I (66369) lcd_test_setFontSize: elapsed time[us]:56293
+I (70369) lcd: frame buffer alloc success
+I (70399) lcd_test_colorBar: elapsed time[us]:2300
+I (72429) lcd_test_colorBand: elapsed time[us]:2270
+I (74469) lcd_test_fillScreen: elapsed time[us]:6455
+I (76499) lcd_test_drawHVLine: elapsed time[us]:312
+I (78529) lcd_test_drawLine: elapsed time[us]:2533
+I (80559) lcd_test_drawRect: elapsed time[us]:289
+I (82589) lcd_test_fillRect: elapsed time[us]:4074
+I (84629) lcd_test_drawTriangle: elapsed time[us]:7424
+I (86669) lcd_test_fillTriangle: elapsed time[us]:9012
+I (88699) lcd_test_drawCircle: elapsed time[us]:1704
+I (90749) lcd_test_fillCircle: elapsed time[us]:15030
+I (92779) lcd_test_drawRoundRect: elapsed time[us]:902
+I (94829) lcd_test_fillRoundRect: elapsed time[us]:16430
+I (96859) lcd_test_drawArrow: elapsed time[us]:619
+I (98889) lcd_test_fillArrow: elapsed time[us]:511
+I (100929) lcd_test_drawBitmap: elapsed time[us]:8328
+I (103769) lcd_test_drawRGBBitmap: elapsed time[us]:813793
+I (105799) lcd_test_drawRect2: elapsed time[us]:1092
+I (107859) lcd_test_fillRect2: elapsed time[us]:25359
+I (109889) lcd_test_drawRoundRect2: elapsed time[us]:763
+I (111939) lcd_test_fillRoundRect2: elapsed time[us]:18215
+I (113979) lcd_test_drawRectC: elapsed time[us]:6573
+I (116019) lcd_test_drawTriangleC: elapsed time[us]:6645
+I (118049) lcd_test_drawRegularPolygonC: elapsed time[us]:685
+I (120109) lcd_test_drawString: elapsed time[us]:24641
+I (122139) lcd_test_setFontDirection: elapsed time[us]:301
+I (124169) lcd_test_setFontSize: elapsed time[us]:2272
+I (131249) lcd_test_wrapAround: elapsed time[us]:5032479
+
+########## run 2024-05-21 ##########
+lcdFillScreen us:212   # _use_frame_buffer = true; memset(dev->_frame_buffer, 0, dev->_width*dev->_height*sizeof(uint16_t));
+lcdFillScreen us:419   # _use_frame_buffer = true; while (len) memcpy(ptr, dev->_frame_buffer, n*sizeof(uint16_t));
+lcdFillScreen us:656   # _use_frame_buffer = true; while (len--) *ptr++ = color;
+lcdFillScreen us:694   # _use_frame_buffer = true; for... for... dev->_frame_buffer[j*dev->_width+i] = color;
+
+lcdFillScreen us:32449 # _use_frame_buffer = false; spi_master_write_color(dev, color, size); // no limit, direct
+lcdFillScreen us:32469 # _use_frame_buffer = false; spi_master_write_color(dev, color, size); // no limit, call lcdFillRect
+lcdFillScreen us:34237 # _use_frame_buffer = false; for... spi_master_write_color(dev, color, size); // 512 limit
+-
+lcdWriteFrame us:32421 # without swap
+lcdWriteFrame us:35022 # swap using (colors[i] << 8) | (colors[i] >> 8) # SWAP16()
+lcdWriteFrame us:35022 # swap using {register uint16_t c = colors[i]; buffer[i] = (c << 8) | (c >> 8);}
+lcdWriteFrame us:35375 # Byte[index++] = (colors[i] >> 8) & 0xFF; Byte[index++] = colors[i] & 0xFF;
+lcdWriteFrame us:35980 # swap using SPI_SWAP_DATA_TX(colors[i], 16);
+
+WCET us:35953 # with SWAP16 macro, half missiles updated each tick into frame buffer
+WCET us:35994 # with SWAP16 macro, all missiles updated each tick into frame buffer
+
+########## run 2024-05-07 ##########
+I (42470) FillTest: elapsed time[ms]:1090
+I (44500) ColorBarTest: elapsed time[ms]:30
+I (46570) ColorBandTest: elapsed time[ms]:70
+I (48660) ArrowTest: elapsed time[ms]:90
+I (50700) LineTestHV: elapsed time[ms]:40
+I (53100) LineTest: elapsed time[ms]:400
+I (55680) CircleTest: elapsed time[ms]:580
+I (57800) RoundRectTest: elapsed time[ms]:120
+I (59920) FillRectTest: elapsed time[ms]:120
+I (63030) FillTriTest: elapsed time[ms]:1110
+I (65710) FillCircleTest: elapsed time[ms]:680
+I (68710) RectangleTest: elapsed time[ms]:1000
+I (71830) TriangleTest: elapsed time[ms]:1120
+I (73880) TextDirTest: elapsed time[ms]:50
+I (76000) TextParamTest: elapsed time[ms]:120
+I (79630) TextTest: elapsed time[ms]:1630
+
+########## background done in one block per char ##########
+I (1127) ArrowTest: elapsed time[ms]:90
+I (6167) TextDirTest: elapsed time[ms]:40
+I (11287) TextParamTest: elapsed time[ms]:120
+I (17917) TextTest: elapsed time[ms]:1630
+
+########## background done in sub-blocks (pixels) ##########
+I (1127) ArrowTest: elapsed time[ms]:90
+I (6167) TextDirTest: elapsed time[ms]:40
+I (11427) TextParamTest: elapsed time[ms]:260
+I (21217) TextTest: elapsed time[ms]:4790
+
+########## use spi_device_polling_transmit ##########
+I (2307) FillTest: elapsed time[ms]:1090
+I (4337) ColorBarTest: elapsed time[ms]:30
+I (6407) ColorBandTest: elapsed time[ms]:70
+I (8507) ArrowTest: elapsed time[ms]:100
+I (10547) LineTestHV: elapsed time[ms]:40
+I (12957) LineTest: elapsed time[ms]:410
+I (15527) CircleTest: elapsed time[ms]:570
+I (17647) RoundRectTest: elapsed time[ms]:120
+I (19767) FillRectTest: elapsed time[ms]:120
+I (22877) FillTriTest: elapsed time[ms]:1110
+I (25617) FillCircleTest: elapsed time[ms]:740
+I (28597) RectangleTest: elapsed time[ms]:980
+I (31687) TriangleTest: elapsed time[ms]:1090
+I (33867) DirectionTest: elapsed time[ms]:180
+I (36287) HorizontalTest: elapsed time[ms]:420
+I (38697) VerticalTest: elapsed time[ms]:410
+I (41107) CodeTest: elapsed time[ms]:410
+I (43767) CodeTest: elapsed time[ms]:660
+
+########## optimized spi_master_write_color ##########
+I (2306) FillTest: elapsed time[ms]:1090
+I (4356) ColorBarTest: elapsed time[ms]:50
+I (6436) ColorBandTest: elapsed time[ms]:80
+I (8626) ArrowTest: elapsed time[ms]:190
+I (10676) LineTestHV: elapsed time[ms]:50
+I (13596) LineTest: elapsed time[ms]:920
+I (16906) CircleTest: elapsed time[ms]:1310
+I (19136) RoundRectTest: elapsed time[ms]:230
+I (21336) FillRectTest: elapsed time[ms]:200
+I (25556) FillTriTest: elapsed time[ms]:2220
+I (28776) FillCircleTest: elapsed time[ms]:1220
+I (33026) RectangleTest: elapsed time[ms]:2250
+I (37556) TriangleTest: elapsed time[ms]:2530
+I (39936) DirectionTest: elapsed time[ms]:380
+I (42886) HorizontalTest: elapsed time[ms]:950
+I (45796) VerticalTest: elapsed time[ms]:910
+I (48706) CodeTest: elapsed time[ms]:910
+I (52216) CodeTest: elapsed time[ms]:1500
+
+########## With H/V DrawLine ##########
+I (2306) FillTest: elapsed time[ms]:1090
+I (4356) ColorBarTest: elapsed time[ms]:50
+I (6436) ColorBandTest: elapsed time[ms]:80
+I (8626) ArrowTest: elapsed time[ms]:190
+I (10676) LineTestHV: elapsed time[ms]:50
+I (13596) LineTest: elapsed time[ms]:920
+I (16906) CircleTest: elapsed time[ms]:1310
+I (19136) RoundRectTest: elapsed time[ms]:230
+I (21346) FillRectTest: elapsed time[ms]:210
+I (25566) FillTriTest: elapsed time[ms]:2220
+I (28786) FillCircleTest: elapsed time[ms]:1220
+I (33046) RectangleTest: elapsed time[ms]:2260
+I (37576) TriangleTest: elapsed time[ms]:2530
+I (39956) DirectionTest: elapsed time[ms]:380
+I (42906) HorizontalTest: elapsed time[ms]:950
+I (45806) VerticalTest: elapsed time[ms]:900
+I (48726) CodeTest: elapsed time[ms]:920
+I (52226) CodeTest: elapsed time[ms]:1500
+
+########## int32_t ##########
+I (2336) FillTest: elapsed time[ms]:1120
+I (4376) ColorBarTest: elapsed time[ms]:40
+I (6636) ColorBandTest: elapsed time[ms]:260
+I (8856) ArrowTest: elapsed time[ms]:220
+I (13416) LineTest: elapsed time[ms]:2560
+I (19136) CircleTest: elapsed time[ms]:3720
+I (23456) RoundRectTest: elapsed time[ms]:2320
+I (25646) FillRectTest: elapsed time[ms]:190
+I (29886) FillTriTest: elapsed time[ms]:2240
+I (37846) RectangleTest: elapsed time[ms]:5960
+I (45756) TriangleTest: elapsed time[ms]:5910
+I (48136) DirectionTest: elapsed time[ms]:380
+I (51066) HorizontalTest: elapsed time[ms]:930
+I (53996) VerticalTest: elapsed time[ms]:930
+I (56916) CodeTest: elapsed time[ms]:920
+I (60416) CodeTest: elapsed time[ms]:1500
+
+########## float ##########
+I (2336) FillTest: elapsed time[ms]:1120
+I (4386) ColorBarTest: elapsed time[ms]:50
+I (6646) ColorBandTest: elapsed time[ms]:260
+I (8866) ArrowTest: elapsed time[ms]:220
+I (13416) LineTest: elapsed time[ms]:2550
+I (17696) CircleTest: elapsed time[ms]:2280
+I (22016) RoundRectTest: elapsed time[ms]:2320
+I (24186) FillRectTest: elapsed time[ms]:170
+I (28426) FillTriTest: elapsed time[ms]:2240
+I (40146) RectangleTest: elapsed time[ms]:9720
+I (51856) TriangleTest: elapsed time[ms]:9710
+I (54236) DirectionTest: elapsed time[ms]:380
+I (57166) HorizontalTest: elapsed time[ms]:930
+I (60096) VerticalTest: elapsed time[ms]:930
+I (63016) CodeTest: elapsed time[ms]:920
+I (66516) CodeTest: elapsed time[ms]:1500
+
+########## double ##########
+I (2336) FillTest: elapsed time[ms]:1120
+I (4386) ColorBarTest: elapsed time[ms]:50
+I (6646) ColorBandTest: elapsed time[ms]:260
+I (8866) ArrowTest: elapsed time[ms]:220
+I (13416) LineTest: elapsed time[ms]:2550
+I (17696) CircleTest: elapsed time[ms]:2280
+I (22016) RoundRectTest: elapsed time[ms]:2320
+I (24186) FillRectTest: elapsed time[ms]:170
+I (28436) FillTriTest: elapsed time[ms]:2250
+I (40156) RectangleTest: elapsed time[ms]:9720
+I (51866) TriangleTest: elapsed time[ms]:9710
+I (54256) DirectionTest: elapsed time[ms]:380
+I (57196) HorizontalTest: elapsed time[ms]:940
+I (60136) VerticalTest: elapsed time[ms]:940
+I (63056) CodeTest: elapsed time[ms]:920
+I (66566) CodeTest: elapsed time[ms]:1510

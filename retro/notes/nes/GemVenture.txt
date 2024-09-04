@@ -1,0 +1,52 @@
+GemVenture
+beta
+
+by Tom Livak
+
+Copyright (c) 2009, Tom Livak.  All rights reserved.
+
+=== INTRO ===
+
+GemVenture is puzzle game where you fight against a series of monsters.
+If you've played PuzzleQuest, you'll feel right at home.  You attempt to 
+match colored gems in the playfield, which will give you mana to cast spells, 
+and can heal yourself or hurt your opponent.  Your opponent then take a turn
+matching gems, and you continue back and forth until only one is left 
+standing.  GemVenture features 6 character classes, 18 different spells,
+and 20 monsters, each with their own special characteristics!
+
+=== GAMEPLAY ===
+
+You'll first pick one of the six character classes, which determines which spells
+you can cast.  Then you'll face your first opponent.  Use the direction pad and
+the A button to select two adjacent gems.  The gems will switch places, and any
+group of 3 more gems will break.  Each gem you break will give you one mana of that
+color.  Gems shaped like a heart will heal you, and those with spikes will hurt your
+opponent.  Pressing select will switch you over the spell menu at the bottom of
+the screen, which you cast when you have enough mana.  Each monster has it's own
+special powers which use their mana.
+
+If you run out of life points, your game is over.  If you defeat your opponent,
+you'll get to chose one stat to increase before taking on your next opponent.
+
+=== CREDITS ===
+
+Art, Sound, Programming
+	Tom Livak
+
+Testing
+	Allen P. Williams
+
+Special Thanks to
+	Kent Hansen
+	Michael Martin
+	Everyone at nesdev.parodius.com
+	
+=== LICENSE ===
+
+This game is freeware.  You may distribute verbatim copies freely, 
+provided that this unmodified readme file accompanies the ROM file.  
+You may not sell or modify the software without written permission 
+from the author.  The software is provided "as is", without warranty, 
+and the author will not be held responsible for any use or misuse of the
+software.
