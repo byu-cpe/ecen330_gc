@@ -43,7 +43,7 @@ void watch_init(void)
 	lcd_setFontBackground(FACE_BG);
 
 	// Watch face
-	lcd_drawRoundRect(FACE_X1, FACE_Y1, FACE_X2, FACE_Y2, FACE_R, FACE_C);
+	lcd_drawRoundRect2(FACE_X1, FACE_Y1, FACE_X2, FACE_Y2, FACE_R, FACE_C);
 
 	// Watch face annotation
 	lcd_setFontSize(1);
