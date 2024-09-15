@@ -1,6 +1,6 @@
 idf_component_register(
 SRCS
-  powerUp.c
+  powerUp.c userSound.c
 INCLUDE_DIRS
   .
 )
