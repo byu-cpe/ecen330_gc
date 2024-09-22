@@ -14,6 +14,13 @@
 #include "hw.h"
 #include "sound.h"
 
+// Make audio buffer extern for testing
+#ifdef EXTERN_BUF
+#define scope
+#else
+#define scope static
+#endif
+
 #define SOUND_A  HW_SND_A  // Audio output
 #define SOUND_EN HW_SND_EN // Sound enable, active high
 
@@ -28,8 +35,8 @@ static const char *TAG = "sound";
 
 // Critical section protected variables
 static portMUX_TYPE spinlock = portMUX_INITIALIZER_UNLOCKED;
-static const uint8_t *abase;
-static volatile uint32_t asize;
+scope  const uint8_t *abase;
+scope  volatile uint32_t asize;
 static volatile uint32_t aidx;
 static volatile bool     cyclic;
 

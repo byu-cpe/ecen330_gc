@@ -22,6 +22,8 @@ static const char *TAG = "lab04";
 #define UP_PER 30 // Update period in ms
 #define TIME_OUT 500 // ms
 
+#define PIN_GET_BIT(r,b) (((r) >> (b)) & 1)
+
 // Cursor support
 #define CUR_SZ 7 // Cursor size
 #define CUR_CL WHITE // Cursor color
@@ -58,6 +60,17 @@ typedef enum {SINE_T, SQUARE_T, TRIANGLE_T, SAW_T, LAST_T} tone_t;
 #define A4 440
 #define A5 880
 
+// Wave configuration
+#define WAVE_X 0
+#define WAVE_Y ((LCD_H-WAVE_H)/2)
+#define WAVE_W LCD_W
+#define WAVE_H (LCD_H*3/4)
+#define WAVE_CL GREEN
+#define WAVE_YC (WAVE_Y+WAVE_H/2-1)
+#define WAVE_MARK_H 15
+#define WAVE_MARK_CL rgb565(96, 96, 96)
+// #define WAVE_MARK_CL WHITE
+
 TimerHandle_t update_timer;
 coord_t dcx, dcy;
 uint32_t vol;
@@ -90,6 +103,37 @@ void draw_tone_status(void)
 #endif // MILESTONE
 }
 
+// Draw the current waveform in the center of the display
+void draw_waveform(void)
+{
+#if MILESTONE == 2
+	extern const uint8_t *abase;
+	extern volatile uint32_t asize;
+	#define WAVE_MAX ((1 << (sizeof(abase[0])*8))-1) // Maximum value
+	float scalex = (float)(WAVE_W/2)/(asize);
+	float scaley = (float)(WAVE_H-1)/WAVE_MAX;
+	#define W2X(val) ((coord_t)((val) * scalex + 0.5f) + WAVE_X)
+	#define W2Y(val) ((WAVE_Y+WAVE_H-1) - (coord_t)((val) * scaley + 0.5f))
+
+	coord_t x0 = W2X(-1);
+	coord_t y0 = W2Y(abase[asize-1]);
+	coord_t x2 = (coord_t)(asize * scalex + 0.5f);
+	lcd_drawHLine(WAVE_X, WAVE_Y, WAVE_W, WAVE_MARK_CL);
+	lcd_drawHLine(WAVE_X, WAVE_Y+WAVE_H-1, WAVE_W, WAVE_MARK_CL);
+	lcd_drawVLine(WAVE_X, WAVE_YC-WAVE_MARK_H/2, WAVE_MARK_H, WAVE_MARK_CL);
+	lcd_drawVLine(WAVE_X+x2, WAVE_YC-WAVE_MARK_H/2, WAVE_MARK_H, WAVE_MARK_CL);
+	for (uint32_t i = 0; i < asize; i++) {
+		coord_t x1 = W2X(i);
+		coord_t y1 = W2Y(abase[i]);
+		lcd_drawPixel(x1, WAVE_YC, WAVE_MARK_CL);
+		lcd_drawPixel(x1+x2, WAVE_YC, WAVE_MARK_CL);
+		lcd_drawLine(x0, y0, x1, y1, WAVE_CL);
+		lcd_drawLine(x0+x2, y0, x1+x2, y1, WAVE_CL);
+		x0 = x1; y0 = y1;
+	}
+#endif // MILESTONE
+}
+
 // Update the position of the cursor and play sound if button A or B is pressed
 void update(TimerHandle_t pxTimer)
 {
@@ -102,30 +146,36 @@ void update(TimerHandle_t pxTimer)
 	btns = ~pin_get_in_reg() & HW_BTN_MASK;
 	if (!pressed && btns) { // On button press
 		pressed = true;
-		if (!pin_get_level(HW_BTN_A)) { // Play tone
+		if (PIN_GET_BIT(btns, HW_BTN_A)) { // Play tone
 			tone_start(tone, (dcy > 0) ?
 				A4-(dcy*A3)/JOY_MAX_DISP :
 				A4-(dcy*A4)/JOY_MAX_DISP);
-		} else if (!pin_get_level(HW_BTN_B)) { // Play user sound
+			cursor(lx, ly, SBG_CL); // Erase cursor
+			draw_waveform();
+		} else if (PIN_GET_BIT(btns, HW_BTN_B)) { // Play user sound
 			sound_start(userSound, sizeof(userSound), false);
-		} else if (!pin_get_level(HW_BTN_MENU)) { // Select next tone
+		} else if (PIN_GET_BIT(btns, HW_BTN_MENU)) { // Select next tone
 			tone = (tone+1)%LAST_T;
-		} else if (!pin_get_level(HW_BTN_OPTION)) { // Select next volume level
-			vol = (vol <= MAX_VOL-VOL_INC) ? vol+VOL_INC : VOL_INC;
+		} else if (PIN_GET_BIT(btns, HW_BTN_OPTION)) { // Select next volume level
+			vol = (vol <= MAX_VOL-VOL_INC) ? vol+VOL_INC : 0;
 			tone_set_volume(vol);
 		}
 		draw_tone_status();
 	} else if (pressed && !btns) { // On button release, stop playing sound
 		tone_stop();
 		pressed = false;
+		lcd_fillRect(WAVE_X, WAVE_Y, WAVE_W, WAVE_H, SBG_CL); // Erase waveform
+		cursor(lx, ly, CUR_CL); // Redraw cursor
 	}
 	// Convert from joystick displacement to screen coordinates
 	x = A2X(dcx); y = A2Y(dcy);
 	x = CLIP(x, 0, LCD_W-1);
 	y = CLIP(y, 0, LCD_H-1);
 	if (x != lx || y != ly) { // Update cursor position
-		cursor( lx,  ly, SBG_CL);
-		cursor(x, y, CUR_CL);
+		if (!pressed || !PIN_GET_BIT(btns, HW_BTN_A)) {
+			cursor( lx,  ly, SBG_CL);
+			cursor(x, y, CUR_CL);
+		}
 		lx = x; ly = y;
 		draw_joystick_status();
 		if (y < LCD_CHAR_H && x > LCD_W/2)
