@@ -5,6 +5,7 @@ if(EXISTS ../../components/tone/tone.c)
 else()
     set(MILESTONE 1)
 endif()
+message(STATUS "MILESTONE=${MILESTONE}")
 idf_component_register(SRCS main.c
                        INCLUDE_DIRS .
                        PRIV_REQUIRES ${COMPS})
