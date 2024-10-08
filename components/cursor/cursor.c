@@ -4,8 +4,8 @@
 #include "joy.h"
 #include "cursor.h"
 
-#define SEN_DEFAULT (1.25f*LCD_W) // 1.25x screen width pixels per second
-#define THRESH_DEFAULT 150 // raw ADC values
+#define SEN_DEFAULT 1.25f // Screen widths per second
+#define THRESH_DEFAULT 0.75f // Raw ADC values
 #define CLIP(x,lo,hi) ((x) < (lo) ? (lo) : ((x) > (hi) ? (hi) : (x)))
 
 static uint32_t uperiod; // Update period in milliseconds.
@@ -15,6 +15,7 @@ static float xpos, ypos; // Current cursor position as a float.
 
 
 // Initialize the cursor. Must be called before use.
+// The initial position is the center of the screen.
 // per: Specify the period in milliseconds that the cursor
 // position is updated with a call to cursor_tick().
 // Return zero if successful, or non-zero otherwise.
@@ -52,23 +53,24 @@ void cursor_tick(void)
 	ypos = CLIP(ypos, 0, LCD_H-1);
 }
 
-// Set the sensitivity of the cursor to joystick movement.
-// Sensitivity is in units of screen pixels/sec at full joystick displacement.
-// The default is 1.25x screen width pixels per second.
-// sens: joystick movement sensitivity in screen pixels/sec.
+// Set the sensitivity (speed) of the cursor relative to joystick movement.
+// The sensitivity is specified as a factor in units of screen widths/sec
+// at full joystick displacement. The default is 1.25 screen widths per second.
+// sens: joystick movement sensitivity in screen widths/sec.
 void cursor_set_sensitivity(float sens)
 {
-	sfactor = ((sens < 1.0f) ? 1.0f : sens) / JOY_MAX_DISP * uperiod / 1000;
+	float rate = sens*LCD_W; // Convert to pixels per second
+	sfactor = ((rate < 1.0f) ? 1.0f : rate) / JOY_MAX_DISP * uperiod / 1000;
 }
 
 // Set the threshold of joystick displacement needed before moving the cursor.
-// Threshold is specified as a factor (0 to 1) of maximum displacement.
+// The threshold is specified as a factor (0 to 1) of maximum displacement.
 // If this value is too low, the cursor will drift when the joystick is untouched.
 // The default is a displacement factor of 0.075 from center position.
 // thr: threshold factor (0 to 1)
 void cursor_set_threshold(float thr)
 {
-	thresh = thr;
+	thresh = thr*JOY_MAX_DISP; // Convert to raw ADC values
 }
 
 // Get the cursor position in screen coordinates.
@@ -79,4 +81,15 @@ void cursor_get_pos(coord_t *x, coord_t *y)
 {
 	*x = xpos+0.5f;
 	*y = ypos+0.5f;
+}
+
+// Set the cursor position in screen coordinates.
+// Coordinate values range from 0 to lcd maximum width and height minus 1.
+// x: x coordinate.
+// y: y coordinate.
+void cursor_set_pos(coord_t x, coord_t y)
+{
+	// Clip new position to screen.
+	xpos = CLIP(x, 0, LCD_W-1);
+	ypos = CLIP(y, 0, LCD_H-1);
 }

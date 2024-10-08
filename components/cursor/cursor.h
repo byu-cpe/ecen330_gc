@@ -2,7 +2,6 @@
 #define CURSOR_H_
 
 #include <stdint.h>
-#include <stdbool.h>
 
 #include "lcd.h" // coord_t
 
@@ -16,6 +15,7 @@
 
 
 // Initialize the cursor. Must be called before use.
+// The initial position is the center of the screen.
 // per: Specify the period in milliseconds that the cursor
 // position is updated with a call to cursor_tick().
 // Return zero if successful, or non-zero otherwise.
@@ -26,14 +26,14 @@ int32_t cursor_init(uint32_t per);
 // Therefore, it must be called from a software task context.
 void cursor_tick(void);
 
-// Set the sensitivity of the cursor to joystick movement.
-// Sensitivity is in units of screen pixels/sec at full joystick displacement.
-// The default is 1.25x screen width pixels per second.
-// sens: joystick movement sensitivity in screen pixels/sec.
+// Set the sensitivity (speed) of the cursor relative to joystick movement.
+// The sensitivity is specified as a factor in units of screen widths/sec
+// at full joystick displacement. The default is 1.25 screen widths per second.
+// sens: joystick movement sensitivity in screen widths/sec.
 void cursor_set_sensitivity(float sens);
 
 // Set the threshold of joystick displacement needed before moving the cursor.
-// Threshold is specified as a factor (0 to 1) of maximum displacement.
+// The threshold is specified as a factor (0 to 1) of maximum displacement.
 // If this value is too low, the cursor will drift when the joystick is untouched.
 // The default is a displacement factor of 0.075 from center position.
 // thr: threshold factor (0 to 1)
@@ -44,5 +44,11 @@ void cursor_set_threshold(float thr);
 // *x: pointer to x coordinate.
 // *y: pointer to y coordinate.
 void cursor_get_pos(coord_t *x, coord_t *y);
+
+// Set the cursor position in screen coordinates.
+// Coordinate values range from 0 to lcd maximum width and height minus 1.
+// x: x coordinate.
+// y: y coordinate.
+void cursor_set_pos(coord_t x, coord_t y);
 
 #endif // CURSOR_H_
