@@ -8,6 +8,7 @@
  */
 
 #include <stdint.h>
+#include "lcd.h"
 
 /**
  * @brief Draw lines that form the playing grid.
