@@ -2,7 +2,7 @@
 #define HW_H_
 
 #if defined(HW_TARGET_LTAG)
-#include "hw_ltag.h"
+#include "hw_ltag_d.h"
 #else
 #include "hw_gc.h"
 #endif

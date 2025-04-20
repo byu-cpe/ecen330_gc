@@ -77,18 +77,4 @@
 #define HW_EX7 16
 #define HW_EX8 17
 
-//---------- Laser tag ----------//
-#define HW_LTAG_TRIGGER 32
-#define HW_LTAG_HITLED  15
-#define HW_LTAG_TX      12
-#define HW_LTAG_RX      34
-
-// LTAG A
-/*
-#define HW_LTAG_TRIGGER 35
-#define HW_LTAG_HITLED 33
-#define HW_LTAG_TX 16
-#define HW_LTAG_RX 32
-*/
-
 #endif // HW_GC_H_

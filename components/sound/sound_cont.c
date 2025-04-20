@@ -65,7 +65,7 @@ static bool IRAM_ATTR dac_convert_callback(dac_continuous_handle_t handle,
 			buf, sizeof(buf), NULL /*&load_bytes*/);
 			// error if load_bytes != sizeof(buf)
 	} else if (dcnt) {
-		dcnt--;
+		dcnt--; // add silence to DMA buffer when done
 		portEXIT_CRITICAL_ISR(&spinlock);
 		memset(buf, SILENCE, sizeof(buf));
 		dac_continuous_write_asynchronously(handle,

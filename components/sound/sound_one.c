@@ -145,7 +145,7 @@ int32_t sound_init(uint32_t sample_hz)
 // Return zero if successful, or non-zero otherwise.
 int32_t sound_deinit(void)
 {
-	ESP_LOGI(TAG, "Stop DAC Timer");
+	ESP_LOGI(TAG, "Stop DAC timer");
 	ESP_ERROR_CHECK(gptimer_stop(dac_timer));
 	ESP_ERROR_CHECK(gptimer_disable(dac_timer));
 	ESP_ERROR_CHECK(gptimer_del_timer(dac_timer));

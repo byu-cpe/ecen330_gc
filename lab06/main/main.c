@@ -10,7 +10,7 @@
 #include "cursor.h"
 #include "sound.h"
 #include "pin.h"
-#include "gameControl.h"
+#include "game.h"
 #include "config.h"
 
 // sound support
@@ -59,7 +59,7 @@ void app_main(void)
 	lcd_fillScreen(CONFIG_COLOR_BACKGROUND);
 	cursor_init(PER_MS);
 	sound_init(MISSILELAUNCH_SAMPLE_RATE);
-	gameControl_init();
+	game_init();
 
 	// Configure I/O pins for buttons
 	pin_reset(HW_BTN_A);
@@ -105,7 +105,7 @@ void app_main(void)
 #ifndef CONFIG_ERASE
 		lcd_fillScreen(CONFIG_COLOR_BACKGROUND);
 #endif // CONFIG_ERASE
-		gameControl_tick();
+		game_tick();
 		cursor_tick();
 		cursor_get_pos(&x, &y);
 #ifdef CONFIG_ERASE
