@@ -104,7 +104,7 @@ def get_files_to_copy_and_zip(lab):
         files.append((src_lab_path / "main/game.c", dest_lab_path / "main", True))
         files.append((src_lab_path / "main/com.c", dest_lab_path / "main", True))
     elif lab == "lab06":
-        files.append((src_lab_path / "main/gameControl.c", dest_lab_path / "main", True))
+        files.append((src_lab_path / "main/game.c", dest_lab_path / "main", True))
         files.append((src_lab_path / "main/missile.c", dest_lab_path / "main", True))
         files.append((src_lab_path / "main/plane.c", dest_lab_path / "main", True))
     elif lab == "lab07":
