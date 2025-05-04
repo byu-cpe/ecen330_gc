@@ -14,29 +14,37 @@ typedef int8_t pin_num_t;
 
 // Reset the configuration of a pin to not be an input or an output.
 // Pull-up is enabled so the pin does not float.
+// Return zero if successful, or non-zero otherwise.
 int32_t pin_reset(pin_num_t pin);
 
 // Enable or disable a pull-up on the pin.
+// Return zero if successful, or non-zero otherwise.
 int32_t pin_pullup(pin_num_t pin, bool enable);
 
 // Enable or disable a pull-down on the pin.
+// Return zero if successful, or non-zero otherwise.
 int32_t pin_pulldown(pin_num_t pin, bool enable);
 
 // Enable or disable the pin as an input signal.
+// Return zero if successful, or non-zero otherwise.
 int32_t pin_input(pin_num_t pin, bool enable);
 
 // Enable or disable the pin as an output signal.
+// Return zero if successful, or non-zero otherwise.
 int32_t pin_output(pin_num_t pin, bool enable);
 
 // Enable or disable the pin as an open-drain signal.
+// Return zero if successful, or non-zero otherwise.
 int32_t pin_odrain(pin_num_t pin, bool enable);
 
 /***** Set and get individual I/O pin signal levels *****/
 
 // Sets the output signal level if the pin is configured as an output.
+// Return zero if successful, or non-zero otherwise.
 int32_t pin_set_level(pin_num_t pin, int32_t level);
 
 // Gets the input signal level if the pin is configured as an input.
+// Return zero or one if successful, or negative otherwise.
 int32_t pin_get_level(pin_num_t pin);
 
 /***** Get I/O register values, one pin per bit *****/

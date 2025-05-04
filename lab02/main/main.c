@@ -15,7 +15,10 @@
 
 static const char *TAG = "lab02";
 
+// Use GPIO to reset and configure (pull mode & direction) pins
 // #define USE_GPIO 1
+
+// Inject errors for testing
 // #define ERRORS 1
 
 #define PIN_MAX  40
@@ -42,6 +45,14 @@ static const char *TAG = "lab02";
 #define SET_BIT(v,b) (v) |= (1U << (b))
 #define CLR_BIT(v,b) (v) &= ~(1U << (b))
 #define GET_BIT(v,b) ((int32_t)(((v) >> (b)) & 1U))
+
+#define CHK_RET(x) ({                                           \
+        int32_t ret_val = (x);                                  \
+        if (ret_val != 0) {                                     \
+            ESP_LOGE(TAG, "FAIL: return %ld, %s", ret_val, #x); \
+        }                                                       \
+        ret_val;                                                \
+    })
 
 typedef struct {
 	const char *label;
@@ -103,13 +114,13 @@ void init_grp(const pin_conf_t *grp, pin_num_t len)
 		gpio_set_direction(pin, out ? GPIO_MODE_INPUT_OUTPUT:GPIO_MODE_INPUT);
 		if (out) gpio_set_level(pin, 0);
 #else
-		pin_reset(pin);
-		pin_pullup(pin, !out);
+		CHK_RET(pin_reset(pin));
+		CHK_RET(pin_pullup(pin, !out));
 		// if output, set as input in addition so it can be read
-		pin_input(pin, true);
+		CHK_RET(pin_input(pin, true));
 		if (out) {
-			pin_output(pin, true);
-			pin_set_level(pin, 0);
+			CHK_RET(pin_output(pin, true));
+			CHK_RET(pin_set_level(pin, 0));
 		}
 #endif /* USE_GPIO */
 		// gpio_dump_io_configuration(stdout, 1LLU << pin);
@@ -208,7 +219,7 @@ if (pin == HW_BTN_SELECT) cps = !cps;
 				}
 			}
 			if (grp[i].out) { // output pin
-				pin_set_level(pin, lvl);
+				CHK_RET(pin_set_level(pin, lvl));
 				crs = pin_get_out_reg();
 				cps = GET_BIT(crs, pin);
 #ifdef ERRORS

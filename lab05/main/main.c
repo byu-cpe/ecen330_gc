@@ -16,11 +16,19 @@
 #include "game.h"
 #include "config.h"
 
+static const char *TAG = "lab05";
+
 // The update period as an integer in ms
 #define PER_MS ((uint32_t)(CONFIG_GAME_TIMER_PERIOD*1000))
 #define TIME_OUT 500 // ms
 
-static const char *TAG = "lab05";
+#define CHK_RET(x) ({                                           \
+        int32_t ret_val = (x);                                  \
+        if (ret_val != 0) {                                     \
+            ESP_LOGE(TAG, "FAIL: return %ld, %s", ret_val, #x); \
+        }                                                       \
+        ret_val;                                                \
+    })
 
 TimerHandle_t update_timer; // Declare timer handle for update callback
 
@@ -46,7 +54,7 @@ void app_main(void)
 	// Initialization
 	lcd_init();
 	lcd_fillScreen(CONFIG_BACK_CLR);
-	nav_init(PER_MS);
+	CHK_RET(nav_init(PER_MS));
 #if MILESTONE == 2
 	com_init();
 #endif // MILESTONE

@@ -34,6 +34,7 @@ static const uint8_t PIN_MUX_REG_OFFSET[] = {
 
 // Reset the configuration of a pin to not be an input or an output.
 // Pull-up is enabled so the pin does not float.
+// Return zero if successful, or non-zero otherwise.
 int32_t pin_reset(pin_num_t pin)
 {
 	if (rtc_gpio_is_valid_gpio(pin)) { // hand-off work to RTC subsystem
@@ -51,6 +52,7 @@ int32_t pin_reset(pin_num_t pin)
 }
 
 // Enable or disable a pull-up on the pin.
+// Return zero if successful, or non-zero otherwise.
 int32_t pin_pullup(pin_num_t pin, bool enable)
 {
 	if (rtc_gpio_is_valid_gpio(pin)) { // hand-off work to RTC subsystem
@@ -62,6 +64,7 @@ int32_t pin_pullup(pin_num_t pin, bool enable)
 }
 
 // Enable or disable a pull-down on the pin.
+// Return zero if successful, or non-zero otherwise.
 int32_t pin_pulldown(pin_num_t pin, bool enable)
 {
 	if (rtc_gpio_is_valid_gpio(pin)) { // hand-off work to RTC subsystem
@@ -73,6 +76,7 @@ int32_t pin_pulldown(pin_num_t pin, bool enable)
 }
 
 // Enable or disable the pin as an input signal.
+// Return zero if successful, or non-zero otherwise.
 int32_t pin_input(pin_num_t pin, bool enable)
 {
 	// TODO: Set or clear the FUN_IE bit in an IO_MUX register
@@ -80,6 +84,7 @@ int32_t pin_input(pin_num_t pin, bool enable)
 }
 
 // Enable or disable the pin as an output signal.
+// Return zero if successful, or non-zero otherwise.
 int32_t pin_output(pin_num_t pin, bool enable)
 {
 	// TODO: Set or clear the I/O pin bit in the ENABLE or ENABLE1 register
@@ -87,6 +92,7 @@ int32_t pin_output(pin_num_t pin, bool enable)
 }
 
 // Enable or disable the pin as an open-drain signal.
+// Return zero if successful, or non-zero otherwise.
 int32_t pin_odrain(pin_num_t pin, bool enable)
 {
 	// TODO: Set or clear the PAD_DRIVER bit in a PIN register
@@ -94,6 +100,7 @@ int32_t pin_odrain(pin_num_t pin, bool enable)
 }
 
 // Sets the output signal level if the pin is configured as an output.
+// Return zero if successful, or non-zero otherwise.
 int32_t pin_set_level(pin_num_t pin, int32_t level)
 {
 	// TODO: Set or clear the I/O pin bit in the OUT or OUT1 register
@@ -101,6 +108,7 @@ int32_t pin_set_level(pin_num_t pin, int32_t level)
 }
 
 // Gets the input signal level if the pin is configured as an input.
+// Return zero or one if successful, or negative otherwise.
 int32_t pin_get_level(pin_num_t pin)
 {
 	// TODO: Get the I/O pin bit from the IN or IN1 register
