@@ -44,7 +44,7 @@ static const char *TAG = "lab04";
 // If not Milestone 2, allow tone code to compile (do nothing)
 typedef enum {SINE_T, SQUARE_T, TRIANGLE_T, SAW_T, LAST_T} tone_t;
 #define MAX_VOL 100U
-#define tone_init(hz)
+#define tone_init(hz) 0
 #define tone_stop()
 #define tone_set_volume(vol)
 #define tone_start(tone,freq)
