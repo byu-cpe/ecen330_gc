@@ -66,10 +66,10 @@ typedef enum {SINE_T, SQUARE_T, TRIANGLE_T, SAW_T, LAST_T} tone_t;
 #define WAVE_W LCD_W
 #define WAVE_H (LCD_H*3/4)
 #define WAVE_CL GREEN
+#define WAVE_XC (WAVE_X+WAVE_W/2)
 #define WAVE_YC (WAVE_Y+WAVE_H/2-1)
 #define WAVE_MARK_H 15
 #define WAVE_MARK_CL rgb565(96, 96, 96)
-// #define WAVE_MARK_CL WHITE
 
 #define CHK_RET(x) ({                                           \
         int32_t ret_val = (x);                                  \
@@ -115,28 +115,38 @@ void draw_tone_status(void)
 void draw_waveform(void)
 {
 #if MILESTONE == 2
-	extern const uint8_t *abase;
+	extern const uint8_t *abase; // Waveform from sound module
 	extern volatile uint32_t asize;
+
+	// Draw waveform boundaries and markers
+	lcd_drawHLine(WAVE_X, WAVE_Y, WAVE_W, WAVE_MARK_CL);
+	lcd_drawHLine(WAVE_X, WAVE_Y+WAVE_H-1, WAVE_W, WAVE_MARK_CL);
+	lcd_drawVLine(WAVE_X, WAVE_YC-WAVE_MARK_H/2, WAVE_MARK_H, WAVE_MARK_CL);
+	lcd_drawVLine(WAVE_X+WAVE_XC, WAVE_YC-WAVE_MARK_H/2, WAVE_MARK_H, WAVE_MARK_CL);
+
+	// Check if waveform size is valid
+	if (asize == 0U || asize > SAMPLE_RATE/LOWEST_FREQ || !sound_busy()) {
+		char *str = "Invalid Waveform Size";
+		lcd_drawString(WAVE_XC-strlen(str)*LCD_CHAR_W/2,
+			WAVE_YC-LCD_CHAR_H/2, str, RED);
+		return;
+	}
+
+	// Plot sample points (center line) and wave segments
 	#define WAVE_MAX ((1 << (sizeof(abase[0])*8))-1) // Maximum value
 	float scalex = (float)(WAVE_W/2)/(asize);
 	float scaley = (float)(WAVE_H-1)/WAVE_MAX;
 	#define W2X(val) ((coord_t)((val) * scalex + 0.5f) + WAVE_X)
 	#define W2Y(val) ((WAVE_Y+WAVE_H-1) - (coord_t)((val) * scaley + 0.5f))
-
 	coord_t x0 = W2X(-1);
 	coord_t y0 = W2Y(abase[asize-1]);
-	coord_t x2 = (coord_t)(asize * scalex + 0.5f);
-	lcd_drawHLine(WAVE_X, WAVE_Y, WAVE_W, WAVE_MARK_CL);
-	lcd_drawHLine(WAVE_X, WAVE_Y+WAVE_H-1, WAVE_W, WAVE_MARK_CL);
-	lcd_drawVLine(WAVE_X, WAVE_YC-WAVE_MARK_H/2, WAVE_MARK_H, WAVE_MARK_CL);
-	lcd_drawVLine(WAVE_X+x2, WAVE_YC-WAVE_MARK_H/2, WAVE_MARK_H, WAVE_MARK_CL);
 	for (uint32_t i = 0; i < asize; i++) {
 		coord_t x1 = W2X(i);
 		coord_t y1 = W2Y(abase[i]);
-		lcd_drawPixel(x1, WAVE_YC, WAVE_MARK_CL);
-		lcd_drawPixel(x1+x2, WAVE_YC, WAVE_MARK_CL);
-		lcd_drawLine(x0, y0, x1, y1, WAVE_CL);
-		lcd_drawLine(x0+x2, y0, x1+x2, y1, WAVE_CL);
+		lcd_drawPixel(x1, WAVE_YC, WAVE_MARK_CL); // Sample point
+		lcd_drawPixel(x1+WAVE_XC, WAVE_YC, WAVE_MARK_CL); // 2nd copy
+		lcd_drawLine(x0, y0, x1, y1, WAVE_CL); // Wave segment
+		lcd_drawLine(x0+WAVE_XC, y0, x1+WAVE_XC, y1, WAVE_CL); // 2nd copy
 		x0 = x1; y0 = y1;
 	}
 #endif // MILESTONE
@@ -181,7 +191,7 @@ void update(TimerHandle_t pxTimer)
 	y = CLIP(y, 0, LCD_H-1);
 	if (x != lx || y != ly) { // Update cursor position
 		if (!pressed || !PIN_GET_BIT(btns, HW_BTN_A)) {
-			cursor( lx,  ly, SBG_CL);
+			cursor(lx, ly, SBG_CL);
 			cursor(x, y, CUR_CL);
 		}
 		lx = x; ly = y;
