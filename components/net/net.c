@@ -71,10 +71,10 @@ static void expire_actions(TimerHandle_t pt)
 }
 
 // ESP-NOW send callback, called from high-priority Wi-Fi task.
-static void send_cb(const uint8_t *mac_addr, esp_now_send_status_t status)
+static void send_cb(const esp_now_send_info_t *tx_info, esp_now_send_status_t status)
 {
 	if (status != ESP_NOW_SEND_SUCCESS) {
-		ESP_LOGE(TAG, "Send (in callback) fail:%d to "MACSTR, status, MAC2STR(mac_addr));
+		ESP_LOGE(TAG, "Send (in callback) fail:%d to "MACSTR, status, MAC2STR(tx_info->des_addr));
 	}
 	xTaskNotifyGive(task_h);
 }
@@ -101,7 +101,7 @@ static void recv_cb(const esp_now_recv_info_t *recv_info, const uint8_t *data, i
 		memset(&peer, 0, sizeof(esp_now_peer_info_t));
 		memcpy(peer.peer_addr, recv_info->src_addr, NET_ALEN);
 		peer.channel = DEFAULT_CHANNEL;
-		peer.ifidx = ESP_IF_WIFI_STA;
+		peer.ifidx = WIFI_IF_STA;
 		peer.encrypt = false;
 		esp_err_t ret = esp_now_add_peer(&peer);
 		if (ret != ESP_OK) {
@@ -199,7 +199,7 @@ int32_t net_init(void)
 	memset(&peer, 0, sizeof(esp_now_peer_info_t));
 	memcpy(peer.peer_addr, broadcast_mac, NET_ALEN);
 	peer.channel = DEFAULT_CHANNEL;
-	peer.ifidx = ESP_IF_WIFI_STA;
+	peer.ifidx = WIFI_IF_STA;
 	peer.encrypt = false;
 	ESP_ERROR_CHECK(esp_now_add_peer(&peer));
 

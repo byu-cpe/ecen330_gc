@@ -1,5 +1,7 @@
 #include <stdint.h>
-#include "soc/gpio_periph.h"
+#include "soc/soc.h" // REG_READ
+#include "soc/gpio_reg.h" // GPIO_PIN0_REG, GPIO_FUNC0_OUT_SEL_CFG_REG
+#include "soc/gpio_periph.h" // GPIO_PIN_MUX_REG
 #include "pin_test.h"
 
 // Get the value of the PIN register for the specified pin argument.
@@ -22,8 +24,8 @@ uint32_t pin_test_get_io_mux_reg(pin_num_t pin)
 
 /*
 For details see:
-C:\esp5\esp-idf\components\soc\include\soc\gpio_periph.h & .c
-C:\esp5\esp-idf\components\soc\esp32\include\soc\gpio_reg.h
-C:\esp5\esp-idf\components\soc\esp32\include\soc\soc.h
-C:\esp5\esp-idf\components\soc\esp32\include\soc\reg_base.h
+/opt/esp6/esp-idf/components/soc/include/soc/gpio_periph.h
+/opt/esp6/esp-idf/components/soc/esp32/include/soc/soc.h
+/opt/esp6/esp-idf/components/soc/esp32/register/soc/gpio_reg.h
+/opt/esp6/esp-idf/components/soc/esp32/register/soc/reg_base.h
 */

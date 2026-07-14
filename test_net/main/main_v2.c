@@ -145,10 +145,13 @@ void app_main(void)
 	lcd_init(); // Clears display
 
 	gpio_reset_pin(HW_BTN_START);
+	gpio_pullup_en(HW_BTN_START);
 	gpio_set_direction(HW_BTN_START, GPIO_MODE_INPUT);
 	gpio_reset_pin(HW_BTN_A);
+	gpio_pullup_en(HW_BTN_A);
 	gpio_set_direction(HW_BTN_A, GPIO_MODE_INPUT);
 	gpio_reset_pin(HW_BTN_B);
+	gpio_pullup_en(HW_BTN_B);
 	gpio_set_direction(HW_BTN_B, GPIO_MODE_INPUT);
 
 	// Initialize network.

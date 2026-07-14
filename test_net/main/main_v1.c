@@ -4,7 +4,6 @@
 #include <string.h>
 
 #include "freertos/FreeRTOS.h"
-#include "driver/gpio.h" // gpio_*
 #include "esp_mac.h" // MACSTR, MAC2STR
 #include "esp_log.h"
 

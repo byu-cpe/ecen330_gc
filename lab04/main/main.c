@@ -153,7 +153,7 @@ void draw_waveform(void)
 }
 
 // Update the position of the cursor and play sound if button A or B is pressed
-void update(TimerHandle_t pxTimer)
+void update(TimerHandle_t xTimer)
 {
 	static coord_t lx = -1, ly = -1;
 	coord_t x, y;

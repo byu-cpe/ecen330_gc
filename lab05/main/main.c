@@ -38,7 +38,7 @@ uint32_t isr_triggered_count;
 uint32_t isr_handled_count;
 
 // Interrupt handler for game - use flag method
-void update() {
+void update(TimerHandle_t xTimer) {
 	interrupt_flag = true;
 	isr_triggered_count++;
 }
