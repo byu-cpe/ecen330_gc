@@ -5,13 +5,13 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 
-#include "lcd_test.h"
+#include "test_lcd.h"
 
-static const char *TAG = "lcd_test";
+static const char *TAG = "test_lcd";
 
 void app_main(void)
 {
 	ESP_LOGI(TAG, "Start up");
 
-	lcd_test_all(NULL);
+	test_lcd_all(NULL);
 }

@@ -1,5 +1,5 @@
-#ifndef LCD_TEST_H_
-#define LCD_TEST_H_
+#ifndef TEST_LCD_H_
+#define TEST_LCD_H_
 /**
  * @file
  * @brief Functions to test the LCD display component.
@@ -11,6 +11,6 @@
  * @brief Calls all the tests in a forever loop.
  * @param pvParameters Not used.
  */
-void lcd_test_all(void *pvParameters);
+void test_lcd_all(void *pvParameters);
 
-#endif // LCD_TEST_H_
+#endif // TEST_LCD_H_

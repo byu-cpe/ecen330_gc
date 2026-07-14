@@ -26,7 +26,7 @@ static const coord_t width = LCD_W;
 static const coord_t height = LCD_H;
 
 
-int64_t lcd_test_colorBar(void) {
+int64_t test_lcd_colorBar(void) {
 	int64_t startTick, endTick, diffTick;
 
 	coord_t x1, x2;
@@ -45,7 +45,7 @@ int64_t lcd_test_colorBar(void) {
 	return diffTick;
 }
 
-int64_t lcd_test_colorBand(void) {
+int64_t test_lcd_colorBand(void) {
 	int64_t startTick, endTick, diffTick;
 
 	color_t color = RED;
@@ -71,7 +71,7 @@ int64_t lcd_test_colorBand(void) {
 // Draw (outline) and fill primitives
 //----------------------------------------------------------------------------//
 
-int64_t lcd_test_fillScreen(void) {
+int64_t test_lcd_fillScreen(void) {
 	int64_t startTick, endTick, diffTick;
 
 	color_t ctab[] = {RED,GREEN,BLUE,BLACK,GRAY,YELLOW,CYAN,MAGENTA};
@@ -88,11 +88,11 @@ int64_t lcd_test_fillScreen(void) {
 	return diffTick;
 }
 
-// lcd_test_drawPixel
+// test_lcd_drawPixel
 
-// lcd_test_drawHPixels
+// test_lcd_drawHPixels
 
-int64_t lcd_test_drawHVLine(void) {
+int64_t test_lcd_drawHVLine(void) {
 	int64_t startTick, endTick, diffTick;
 
 	color_t color = RED;
@@ -113,7 +113,7 @@ int64_t lcd_test_drawHVLine(void) {
 	return diffTick;
 }
 
-int64_t lcd_test_drawLine(void) {
+int64_t test_lcd_drawLine(void) {
 	int64_t startTick, endTick, diffTick;
 
 	lcd_fillScreen(BLACK);
@@ -135,7 +135,7 @@ int64_t lcd_test_drawLine(void) {
 	return diffTick;
 }
 
-int64_t lcd_test_drawRect(void) {
+int64_t test_lcd_drawRect(void) {
 	int64_t startTick, endTick, diffTick;
 
 	color_t color = GREEN;
@@ -156,7 +156,7 @@ int64_t lcd_test_drawRect(void) {
 	return diffTick;
 }
 
-int64_t lcd_test_fillRect(void) {
+int64_t test_lcd_fillRect(void) {
 	int64_t startTick, endTick, diffTick;
 
 	lcd_fillScreen(CYAN);
@@ -177,7 +177,7 @@ int64_t lcd_test_fillRect(void) {
 	return diffTick;
 }
 
-int64_t lcd_test_drawTriangle(void) {
+int64_t test_lcd_drawTriangle(void) {
 	int64_t startTick, endTick, diffTick;
 
 	lcd_fillScreen(BLACK);
@@ -201,7 +201,7 @@ int64_t lcd_test_drawTriangle(void) {
 	return diffTick;
 }
 
-int64_t lcd_test_fillTriangle(void) {
+int64_t test_lcd_fillTriangle(void) {
 	int64_t startTick, endTick, diffTick;
 
 	lcd_fillScreen(CYAN);
@@ -225,7 +225,7 @@ int64_t lcd_test_fillTriangle(void) {
 	return diffTick;
 }
 
-int64_t lcd_test_drawCircle(void) {
+int64_t test_lcd_drawCircle(void) {
 	int64_t startTick, endTick, diffTick;
 
 	color_t color = CYAN;
@@ -248,7 +248,7 @@ int64_t lcd_test_drawCircle(void) {
 	return diffTick;
 }
 
-int64_t lcd_test_fillCircle(void) {
+int64_t test_lcd_fillCircle(void) {
 	int64_t startTick, endTick, diffTick;
 
 	lcd_fillScreen(CYAN);
@@ -273,7 +273,7 @@ int64_t lcd_test_fillCircle(void) {
 	return diffTick;
 }
 
-int64_t lcd_test_drawRoundRect(void) {
+int64_t test_lcd_drawRoundRect(void) {
 	int64_t startTick, endTick, diffTick;
 
 	color_t color = YELLOW;
@@ -294,7 +294,7 @@ int64_t lcd_test_drawRoundRect(void) {
 	return diffTick;
 }
 
-int64_t lcd_test_fillRoundRect(void) {
+int64_t test_lcd_fillRoundRect(void) {
 	int64_t startTick, endTick, diffTick;
 
 	color_t ctab[] = {YELLOW,rgb565(4, 16, 64)};
@@ -316,7 +316,7 @@ int64_t lcd_test_fillRoundRect(void) {
 	return diffTick;
 }
 
-int64_t lcd_test_drawArrow(void) {
+int64_t test_lcd_drawArrow(void) {
 	int64_t startTick, endTick, diffTick;
 
 	color_t color = WHITE;
@@ -339,7 +339,7 @@ int64_t lcd_test_drawArrow(void) {
 #define A_L 15 // Arrow vector length in X & Y
 #define A_W  5 // Arrow head half width
 
-int64_t lcd_test_fillArrow(void) {
+int64_t test_lcd_fillArrow(void) {
 	int64_t startTick, endTick, diffTick;
 
 	// Get font width & height
@@ -397,7 +397,7 @@ int64_t lcd_test_fillArrow(void) {
 	return diffTick;
 }
 
-int64_t lcd_test_drawBitmap(void) {
+int64_t test_lcd_drawBitmap(void) {
 	int64_t startTick, endTick, diffTick;
 
 	color_t ctab[] = {RED,GREEN,BLUE,BLACK,GRAY,YELLOW,CYAN,MAGENTA};
@@ -419,7 +419,7 @@ int64_t lcd_test_drawBitmap(void) {
 	return diffTick;
 }
 
-int64_t lcd_test_drawRGBBitmap(void) {
+int64_t test_lcd_drawRGBBitmap(void) {
 	int64_t startTick, endTick, diffTick;
 	coord_t x = 0, y = 0;
 
@@ -444,7 +444,7 @@ int64_t lcd_test_drawRGBBitmap(void) {
 // Rectangle variants that specify two diagonal corners
 //----------------------------------------------------------------------------//
 
-int64_t lcd_test_drawRect2(void) {
+int64_t test_lcd_drawRect2(void) {
 	int64_t startTick, endTick, diffTick;
 
 	lcd_fillScreen(BLACK);
@@ -466,7 +466,7 @@ int64_t lcd_test_drawRect2(void) {
 	return diffTick;
 }
 
-int64_t lcd_test_fillRect2(void) {
+int64_t test_lcd_fillRect2(void) {
 	int64_t startTick, endTick, diffTick;
 
 	lcd_fillScreen(CYAN);
@@ -488,7 +488,7 @@ int64_t lcd_test_fillRect2(void) {
 	return diffTick;
 }
 
-int64_t lcd_test_drawRoundRect2(void) {
+int64_t test_lcd_drawRoundRect2(void) {
 	int64_t startTick, endTick, diffTick;
 
 	color_t color = MAGENTA;
@@ -509,7 +509,7 @@ int64_t lcd_test_drawRoundRect2(void) {
 	return diffTick;
 }
 
-int64_t lcd_test_fillRoundRect2(void) {
+int64_t test_lcd_fillRoundRect2(void) {
 	int64_t startTick, endTick, diffTick;
 
 	color_t ctab[] = {MAGENTA,rgb565(4, 16, 64)};
@@ -535,7 +535,7 @@ int64_t lcd_test_fillRoundRect2(void) {
 // Specify center, size, and rotation angle of primitive shape
 //----------------------------------------------------------------------------//
 
-int64_t lcd_test_drawRectC(void) {
+int64_t test_lcd_drawRectC(void) {
 	int64_t startTick, endTick, diffTick;
 
 	color_t color = CYAN;
@@ -562,7 +562,7 @@ int64_t lcd_test_drawRectC(void) {
 	return diffTick;
 }
 
-int64_t lcd_test_drawTriangleC(void) {
+int64_t test_lcd_drawTriangleC(void) {
 	int64_t startTick, endTick, diffTick;
 
 	color_t color = CYAN;
@@ -589,7 +589,7 @@ int64_t lcd_test_drawTriangleC(void) {
 	return diffTick;
 }
 
-int64_t lcd_test_drawRegularPolygonC(void) {
+int64_t test_lcd_drawRegularPolygonC(void) {
 	int64_t startTick, endTick, diffTick;
 
 	color_t color = GREEN;
@@ -619,9 +619,9 @@ int64_t lcd_test_drawRegularPolygonC(void) {
 // Draw characters and strings
 //----------------------------------------------------------------------------//
 
-// lcd_test_drawChar
+// test_lcd_drawChar
 
-int64_t lcd_test_drawString(void) {
+int64_t test_lcd_drawString(void) {
 	int64_t startTick, endTick, diffTick;
 
 	lcd_fillScreen(BLACK);
@@ -654,7 +654,7 @@ int64_t lcd_test_drawString(void) {
 // Font parameters
 //----------------------------------------------------------------------------//
 
-int64_t lcd_test_setFontDirection(void) {
+int64_t test_lcd_setFontDirection(void) {
 	int64_t startTick, endTick, diffTick;
 
 	// get font width & height
@@ -696,7 +696,7 @@ int64_t lcd_test_setFontDirection(void) {
 	return diffTick;
 }
 
-int64_t lcd_test_setFontSize(void) {
+int64_t test_lcd_setFontSize(void) {
 	int64_t startTick, endTick, diffTick;
 
 	uint8_t i;
@@ -723,30 +723,30 @@ int64_t lcd_test_setFontSize(void) {
 	return diffTick;
 }
 
-// lcd_test_setFontBackground
-// lcd_test_noFontBackground
+// test_lcd_setFontBackground
+// test_lcd_noFontBackground
 
 //----------------------------------------------------------------------------//
 // Display configuration
 //----------------------------------------------------------------------------//
 
-// lcd_test_spiClockFreq
-// lcd_test_displayOff
-// lcd_test_displayOn
-// lcd_test_backlightOff
-// lcd_test_backlightOn
-// lcd_test_inversionOff
-// lcd_test_inversionOn
+// test_lcd_spiClockFreq
+// test_lcd_displayOff
+// test_lcd_displayOn
+// test_lcd_backlightOff
+// test_lcd_backlightOn
+// test_lcd_inversionOff
+// test_lcd_inversionOn
 
 //----------------------------------------------------------------------------//
 // Frame management
 //----------------------------------------------------------------------------//
 
-// lcd_test_frameEnable
-// lcd_test_frameDisable
-// lcd_test_getFrameBuffer
+// test_lcd_frameEnable
+// test_lcd_frameDisable
+// test_lcd_getFrameBuffer
 
-int64_t lcd_test_wrapAround(void) {
+int64_t test_lcd_wrapAround(void) {
 	int64_t startTick, endTick, diffTick;
 
 	if (lcd_getFrameBuffer() == NULL) return 0;
@@ -773,44 +773,44 @@ int64_t lcd_test_wrapAround(void) {
 	return diffTick;
 }
 
-// lcd_test_writeFrame
+// test_lcd_writeFrame
 
 //----------------------------------------------------------------------------//
 // Test all
 //----------------------------------------------------------------------------//
 
-void lcd_test_all(void *pvParameters)
+void test_lcd_all(void *pvParameters)
 {
 	lcd_init();
 	for (;;) {
-		lcd_test_colorBar(); WAIT;
-		lcd_test_colorBand(); WAIT;
-		lcd_test_fillScreen(); WAIT;
-		lcd_test_drawHVLine(); WAIT;
-		lcd_test_drawLine(); WAIT;
-		lcd_test_drawRect(); WAIT;
-		lcd_test_fillRect(); WAIT;
-		lcd_test_drawTriangle(); WAIT;
-		lcd_test_fillTriangle(); WAIT;
-		lcd_test_drawCircle(); WAIT;
-		lcd_test_fillCircle(); WAIT;
-		lcd_test_drawRoundRect(); WAIT;
-		lcd_test_fillRoundRect(); WAIT;
-		lcd_test_drawArrow(); WAIT;
-		lcd_test_fillArrow(); WAIT;
-		lcd_test_drawBitmap(); WAIT;
-		lcd_test_drawRGBBitmap(); WAIT;
-		lcd_test_drawRect2(); WAIT;
-		lcd_test_fillRect2(); WAIT;
-		lcd_test_drawRoundRect2(); WAIT;
-		lcd_test_fillRoundRect2(); WAIT;
-		lcd_test_drawRectC(); WAIT;
-		lcd_test_drawTriangleC(); WAIT;
-		lcd_test_drawRegularPolygonC(); WAIT;
-		lcd_test_drawString(); WAIT;
-		lcd_test_setFontDirection(); WAIT;
-		lcd_test_setFontSize(); WAIT;
-		lcd_test_wrapAround(); WAIT;
+		test_lcd_colorBar(); WAIT;
+		test_lcd_colorBand(); WAIT;
+		test_lcd_fillScreen(); WAIT;
+		test_lcd_drawHVLine(); WAIT;
+		test_lcd_drawLine(); WAIT;
+		test_lcd_drawRect(); WAIT;
+		test_lcd_fillRect(); WAIT;
+		test_lcd_drawTriangle(); WAIT;
+		test_lcd_fillTriangle(); WAIT;
+		test_lcd_drawCircle(); WAIT;
+		test_lcd_fillCircle(); WAIT;
+		test_lcd_drawRoundRect(); WAIT;
+		test_lcd_fillRoundRect(); WAIT;
+		test_lcd_drawArrow(); WAIT;
+		test_lcd_fillArrow(); WAIT;
+		test_lcd_drawBitmap(); WAIT;
+		test_lcd_drawRGBBitmap(); WAIT;
+		test_lcd_drawRect2(); WAIT;
+		test_lcd_fillRect2(); WAIT;
+		test_lcd_drawRoundRect2(); WAIT;
+		test_lcd_fillRoundRect2(); WAIT;
+		test_lcd_drawRectC(); WAIT;
+		test_lcd_drawTriangleC(); WAIT;
+		test_lcd_drawRegularPolygonC(); WAIT;
+		test_lcd_drawString(); WAIT;
+		test_lcd_setFontDirection(); WAIT;
+		test_lcd_setFontSize(); WAIT;
+		test_lcd_wrapAround(); WAIT;
 		if (lcd_getFrameBuffer() == NULL) lcd_frameEnable();
 		else lcd_frameDisable();
 	}
