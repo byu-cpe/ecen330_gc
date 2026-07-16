@@ -295,7 +295,7 @@ void draw_all(bool init)
 {
 	for (int32_t i = 0; i < sizeof(grp_list)/sizeof(group_t); i++) {
 		const group_t *g = grp_list + i;
-		lcd_drawString(g->x, g->y, g->label, GRP_CLR);
+		if (init) lcd_drawString(g->x, g->y, g->label, GRP_CLR);
 		draw_grp(g->x, g->y, g->ptr, g->len, init);
 	}
 }
