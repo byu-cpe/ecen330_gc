@@ -295,7 +295,7 @@ int32_t net_recv(uint8_t *src, void *buf, uint32_t size, uint32_t wait)
 	int32_t ret = ERR_NONE;
 	size_t item_sz;
 	packet_t *item = xRingbufferReceive(rbuf_h, &item_sz, pdMS_TO_TICKS(wait));
-	if (!item) return ERR_RB_GET;
+	if (!item) return 0;
 	if (item_sz >= sizeof(packet_t)) {
 		size_t len = item_sz-sizeof(packet_t);
 		if (len > size) len = size;
