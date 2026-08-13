@@ -117,7 +117,7 @@ void app_main(void)
 		}
 	}
 
-	// Test group clear.
+	// Group clear.
 	ret = net_group_clear();
 	if (ret) {
 		ESP_LOGE(TAG, "net_group_clear() fail:%ld", ret);
