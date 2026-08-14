@@ -56,7 +56,7 @@ void game_tick(void)
 		missile_tick(missiles+i);
 
 	// Tick plane
-	plane_tick();
+	plane_tick(); // Move plane and launch plane missile
 
 	// Relaunch idle enemy missiles
 	for (uint32_t i = 0; i < CONFIG_MAX_ENEMY_MISSILES; i++)
