@@ -44,7 +44,7 @@ int32_t pin_reset(pin_num_t pin)
 	}
 	// TODO: Reset GPIO_PINn_REG: All fields zero
 	// TODO: Reset GPIO_FUNCn_OUT_SEL_CFG_REG: GPIO_FUNCn_OUT_SEL=0x100
-	// TODO: Reset IO_MUX_x_REG: MCU_SEL=2, FUN_DRV=2, FUN_WPU=1
+	// TODO: Reset IO_MUX_x_REG: MCU_SEL=2, FUN_DRV=2, FUN_WPU=1, all other fields=0
 	// NOTE: By default, pin should not float, save power with FUN_WPU=1
 
 	// Now that the pin is reset, set the output level to zero
