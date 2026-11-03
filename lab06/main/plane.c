@@ -11,7 +11,7 @@ typedef enum{
 static missile_t *global_plane_missle;
 static plane_state state;
 static uint16_t plane_idle_tick_counter = 0;
-static uint16_t x_pos = 0;
+static int16_t x_pos = 0;
 const uint16_t y_pos = (LCD_H / 4 );
 bool alread_launched_missile;
 
@@ -25,6 +25,7 @@ void plane_init(missile_t *plane_missile)
     plane_missile->currentState = Idle;
     alread_launched_missile = false;
     state = Idle;
+    plane_idle_tick_counter = CONFIG_PLANE_IDLE_TIME_TICKS;
 }
 
 /******************** Plane Control & Tick Functions ********************/
@@ -64,13 +65,13 @@ void plane_tick(void)
             if (plane_idle_tick_counter >= CONFIG_PLANE_IDLE_TIME_TICKS)
             {
                 state = Flying;
-                x_pos = LCD_W;
+                x_pos = LCD_W + CONFIG_PLANE_WIDTH;
                 alread_launched_missile = false;
             }
             break;
 
         case Flying:
-            if (x_pos <= 0)
+            if (x_pos + CONFIG_PLANE_WIDTH <= 0)
             {
                 state = Idle;
                 plane_idle_tick_counter = 0;
@@ -86,7 +87,6 @@ void plane_tick(void)
             break;
         case Flying:
             //if (x_pos >= (LCD_W / 2) )
-            printf("reached");
             if(!alread_launched_missile && (x_pos <= (LCD_W / 2)) && missile_is_idle(global_plane_missle))
             {
                 missile_launch_plane(global_plane_missle, x_pos, y_pos);

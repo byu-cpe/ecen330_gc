@@ -193,7 +193,6 @@ void missile_tick(missile_t *missile){
     //switch state for transitions
     switch(missile->currentState){
         case Idle:
-            printf("idle   ");
             if (missile->launch == true)
             {
                 missile->currentState = Moving;
@@ -201,7 +200,6 @@ void missile_tick(missile_t *missile){
             }
             break;
         case Moving:
-            printf("moving state");
             if (missile->explode_me || (missile->type == MISSILE_TYPE_PLAYER && missile->length >= missile->total_length))
             {
                 missile->radius = 0;
@@ -214,14 +212,12 @@ void missile_tick(missile_t *missile){
             }
             break;
         case Exploding_Growing:
-        printf("exploding growing state");
             if (missile->radius >= CONFIG_EXPLOSION_MAX_RADIUS)
             {
                 missile->currentState = Exploding_Shrinking;
             }
             break;
         case Exploding_Shrinking:
-        printf("exploding shrinking");
             if (missile->radius <= 0)
             {
                 missile->radius = 0;
@@ -229,7 +225,6 @@ void missile_tick(missile_t *missile){
             }
             break;
         case Impacted:
-        printf("impacted");
             missile->currentState = Idle;
             break;
     }
@@ -264,21 +259,30 @@ void missile_tick(missile_t *missile){
             {
                 lcd_drawLine(missile->x_origin, missile->y_origin, missile->x_current, missile->y_current,CONFIG_COLOR_PLAYER_MISSILE);
             }
-            else 
+            else if (missile->type == MISSILE_TYPE_ENEMY)
             {
                 lcd_drawLine(missile->x_origin, missile->y_origin, missile->x_current, missile->y_current,CONFIG_COLOR_ENEMY_MISSILE);
             } 
+            else //plane missile
+            {
+                lcd_drawLine(missile->x_origin, missile->y_origin, missile->x_current, missile->y_current,CONFIG_COLOR_PLANE_MISSILE);
+
+            }
             
             break;
         case Exploding_Growing:
             missile->radius += CONFIG_EXPLOSION_RADIUS_CHANGE_PER_TICK;
             if(missile->type == MISSILE_TYPE_PLAYER)
             {
-            lcd_fillCircle(missile->x_current,missile->y_current, missile->radius, CONFIG_COLOR_PLAYER_MISSILE);
+                lcd_fillCircle(missile->x_current,missile->y_current, missile->radius, CONFIG_COLOR_PLAYER_MISSILE);
             }
-            else
+            else if (missile->type == MISSILE_TYPE_ENEMY)
             {
-            lcd_fillCircle(missile->x_current,missile->y_current, missile->radius, CONFIG_COLOR_ENEMY_MISSILE);
+                lcd_fillCircle(missile->x_current,missile->y_current, missile->radius, CONFIG_COLOR_ENEMY_MISSILE);
+            }
+            else //plane type
+            {
+                lcd_fillCircle(missile->x_current,missile->y_current, missile->radius, CONFIG_COLOR_PLANE_MISSILE);
             }
             break;
         case Exploding_Shrinking:
@@ -289,12 +293,16 @@ void missile_tick(missile_t *missile){
             }
             if(missile->type == MISSILE_TYPE_PLAYER)
             {
-            lcd_fillCircle(missile->x_current,missile->y_current, missile->radius, CONFIG_COLOR_PLAYER_MISSILE);
+                lcd_fillCircle(missile->x_current,missile->y_current, missile->radius, CONFIG_COLOR_PLAYER_MISSILE);
+            }
+            else if(missile->type == MISSILE_TYPE_ENEMY)
+            {
+                lcd_fillCircle(missile->x_current,missile->y_current, missile->radius, CONFIG_COLOR_ENEMY_MISSILE);
             }
             else
-            {
-            lcd_fillCircle(missile->x_current,missile->y_current, missile->radius, CONFIG_COLOR_ENEMY_MISSILE);
-            }
+            {   
+                lcd_fillCircle(missile->x_current,missile->y_current, missile->radius, CONFIG_COLOR_PLANE_MISSILE);
+            }   
             break;
         case Impacted:
             break;
