@@ -21,8 +21,10 @@ bool alread_launched_missile;
 // that will be (re)launched by the plane. It will only have one missile.
 void plane_init(missile_t *plane_missile)
 {
+    //initilize the plane and plane missile variables
     global_plane_missle = plane_missile;
     plane_missile->currentState = Idle;
+    plane_missile->radius = 0;
     alread_launched_missile = false;
     state = Idle;
     plane_idle_tick_counter = CONFIG_PLANE_IDLE_TIME_TICKS;
@@ -62,6 +64,7 @@ void plane_tick(void)
     //switch for transitions
     switch(state){
         case Idle:
+            //if the plane idle counter is up, then launch the plane to flying
             if (plane_idle_tick_counter >= CONFIG_PLANE_IDLE_TIME_TICKS)
             {
                 state = Flying;
@@ -71,6 +74,7 @@ void plane_tick(void)
             break;
 
         case Flying:
+            //if the plane crosses the screen, reset it to IDLE
             if (x_pos + CONFIG_PLANE_WIDTH <= 0)
             {
                 state = Idle;
@@ -82,16 +86,19 @@ void plane_tick(void)
     //switch for actions
     switch(state)
     {
+        //increment the idle counter
         case Idle:
-            plane_idle_tick_counter +=1;
+            plane_idle_tick_counter++;
             break;
+
         case Flying:
-            //if (x_pos >= (LCD_W / 2) )
+            //plane crosses halfway, then launch the missile
             if(!alread_launched_missile && (x_pos <= (LCD_W / 2)) && missile_is_idle(global_plane_missle))
             {
                 missile_launch_plane(global_plane_missle, x_pos, y_pos);
                 alread_launched_missile = true;
             }
+
             lcd_fillTriangle(x_pos, y_pos, x_pos + CONFIG_PLANE_WIDTH, y_pos - (CONFIG_PLANE_HEIGHT/2), x_pos + CONFIG_PLANE_WIDTH, y_pos + (CONFIG_PLANE_HEIGHT/2), CONFIG_COLOR_PLANE);
             x_pos -= CONFIG_PLANE_DISTANCE_PER_TICK;
             break;

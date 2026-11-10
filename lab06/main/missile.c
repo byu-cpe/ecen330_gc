@@ -12,16 +12,15 @@
 #include <pin.h>
 
 
-
+//definitions for silos
 #define SILO_1      (LCD_W / 4)
 #define SILO_2      (LCD_W * 2 / 4)
 #define SILO_3      (LCD_W * 3 / 4)
 #define PARTITION_1 (LCD_W * 3 / 8)
 #define PARTITION_2 (LCD_W * 5 / 8)
 
-//check my float types to see if thats what the coding standard wants
 
-
+//game state with all the cases for the state machine
 typedef enum{
     Idle,
     Moving,
@@ -29,9 +28,6 @@ typedef enum{
     Exploding_Shrinking,
     Impacted
 }game_state;
-
-
-
 
 
 /******************** Missile Init & Launch Functions ********************/
@@ -54,6 +50,7 @@ void missile_init(missile_t *missile)
 // locations evenly spaced along the bottom of the screen).
 void missile_launch_player(missile_t *missile, coord_t x_dest, coord_t y_dest)
 {
+    //initialize the variables of a player missile when it gets launched
     missile->type = MISSILE_TYPE_PLAYER;
     missile->launch = true;
     missile->explode_me = false;
@@ -62,18 +59,23 @@ void missile_launch_player(missile_t *missile, coord_t x_dest, coord_t y_dest)
     missile->x_dest = x_dest;
     missile->y_dest = y_dest;
     missile->y_origin = LCD_H-1;
+
+    //if its in the first 3/8 of the screen, launch the missles from silo 1
     if (x_dest <= PARTITION_1)
     {
         missile->x_origin = SILO_1;
     }
+    //if its in between 3/8 and 5/8, launch from silo 2
     else if (x_dest >= PARTITION_1 && x_dest <= PARTITION_2)
     {
         missile->x_origin = SILO_2;
     }
+    //if its in between 5/8 and 8/8 of the screen launch from silo 3
     else if (x_dest > PARTITION_2)
     {
         missile->x_origin = SILO_3;
     }
+
     float y_dif = (missile->y_dest - missile->y_origin);
     float x_dif = (missile->x_dest - missile->x_origin);
     missile->total_length = sqrtf((y_dif * y_dif) + (x_dif * x_dif));
@@ -85,6 +87,7 @@ void missile_launch_player(missile_t *missile, coord_t x_dest, coord_t y_dest)
 // top of the screen, and the destination is the very bottom of the screen.
 void missile_launch_enemy(missile_t *missile)
 {
+    //initialize all the variables of a enemy missile when it is getting launche
     missile->type = MISSILE_TYPE_ENEMY;
     missile->launch = true;
     missile->explode_me = false;
@@ -104,6 +107,7 @@ void missile_launch_enemy(missile_t *missile)
 // The destination is randomly chosen along the bottom of the screen.
 void missile_launch_plane(missile_t *missile, coord_t x_orig, coord_t y_orig)
 {
+    //initilize all the variables of the plane when it is getting launched
     missile->type = MISSILE_TYPE_PLANE;
     missile->launch = true;
     missile->explode_me = false;
@@ -124,7 +128,6 @@ void missile_launch_plane(missile_t *missile, coord_t x_orig, coord_t y_orig)
 // when an enemy or a plane missile is located within an explosion zone.
 void missile_explode(missile_t *missile)
 {
-    //missile->currentState = Exploding_Growing;
     missile->explode_me = true;
 }
 
@@ -177,6 +180,7 @@ bool missile_is_impacted(missile_t *missile)
 // position needs to be within the explosion radius.
 bool missile_is_colliding(missile_t *missile, coord_t x, coord_t y)
 {
+    //if missile is already exploding, then just return
     if (!missile_is_exploding(missile)) return false;
 
     float y_dif = (missile->x_current - x);
@@ -193,31 +197,36 @@ void missile_tick(missile_t *missile){
     //switch state for transitions
     switch(missile->currentState){
         case Idle:
+            //if missile launch is ready, then set the state to Moving
             if (missile->launch == true)
             {
                 missile->currentState = Moving;
-                missile->launch = false; //idk if this is right or should go in the actions
+                missile->launch = false; 
             }
             break;
         case Moving:
+            //if missile is ready to explode, go to explode growing state
             if (missile->explode_me || (missile->type == MISSILE_TYPE_PLAYER && missile->length >= missile->total_length))
             {
                 missile->radius = 0;
                 missile->explode_me = false;
                 missile->currentState = Exploding_Growing;
-            }
+            } 
+            //or if its reached its destination, then go to impacted state
             else if (missile->length >= missile->total_length)
             {   
                 missile->currentState = Impacted;
             }
             break;
         case Exploding_Growing:
+            //if it reaches its max radius, then start shrinking the explosion
             if (missile->radius >= CONFIG_EXPLOSION_MAX_RADIUS)
             {
                 missile->currentState = Exploding_Shrinking;
             }
             break;
         case Exploding_Shrinking:
+            //if it's done shrinking, then set it to Idle
             if (missile->radius <= 0)
             {
                 missile->radius = 0;
@@ -225,6 +234,7 @@ void missile_tick(missile_t *missile){
             }
             break;
         case Impacted:
+            //set missile to idle state
             missile->currentState = Idle;
             break;
     }
@@ -232,38 +242,40 @@ void missile_tick(missile_t *missile){
     //switch state for actions
     switch(missile->currentState){
         case Idle:
-            //reset something idk?
             break;
         case Moving:
-
-        
+            //if its a player missile, increase it by player distance per tick
             if (missile->type == MISSILE_TYPE_PLAYER)
             {
                 missile->length += CONFIG_PLAYER_MISSILE_DISTANCE_PER_TICK;
             }
+            //otherwise increase it by the enemy distance per tick
             else
             {
                 missile->length += CONFIG_ENEMY_MISSILE_DISTANCE_PER_TICK;
             }
-
+            //if its length is more than the allowed total length, just set length to total length
             if (missile->length > missile->total_length)
             {
                 missile->length = missile->total_length;
             }
 
             float fraction = missile->length / missile->total_length;
-
             missile->x_current = missile->x_origin + fraction * (missile->x_dest - missile->x_origin);
             missile->y_current = missile->y_origin + fraction * (missile->y_dest - missile->y_origin);
+
+            //draw player missile
             if (missile->type == MISSILE_TYPE_PLAYER)
             {
                 lcd_drawLine(missile->x_origin, missile->y_origin, missile->x_current, missile->y_current,CONFIG_COLOR_PLAYER_MISSILE);
             }
+            //draw red enemy missiles
             else if (missile->type == MISSILE_TYPE_ENEMY)
             {
                 lcd_drawLine(missile->x_origin, missile->y_origin, missile->x_current, missile->y_current,CONFIG_COLOR_ENEMY_MISSILE);
             } 
-            else //plane missile
+            //draw plane missile
+            else 
             {
                 lcd_drawLine(missile->x_origin, missile->y_origin, missile->x_current, missile->y_current,CONFIG_COLOR_PLANE_MISSILE);
 
@@ -272,33 +284,40 @@ void missile_tick(missile_t *missile){
             break;
         case Exploding_Growing:
             missile->radius += CONFIG_EXPLOSION_RADIUS_CHANGE_PER_TICK;
+            //draw player exploding missiles
             if(missile->type == MISSILE_TYPE_PLAYER)
             {
                 lcd_fillCircle(missile->x_current,missile->y_current, missile->radius, CONFIG_COLOR_PLAYER_MISSILE);
             }
+            //draw enemy exploding missile
             else if (missile->type == MISSILE_TYPE_ENEMY)
             {
                 lcd_fillCircle(missile->x_current,missile->y_current, missile->radius, CONFIG_COLOR_ENEMY_MISSILE);
             }
-            else //plane type
+            //draw plane exploding missile
+            else 
             {
                 lcd_fillCircle(missile->x_current,missile->y_current, missile->radius, CONFIG_COLOR_PLANE_MISSILE);
             }
             break;
         case Exploding_Shrinking:
             missile->radius -= CONFIG_EXPLOSION_RADIUS_CHANGE_PER_TICK;
+            //if missile radius is less than 0, just set it to 0
             if (missile->radius < 0) 
             {
                 missile->radius = 0;
             }
+            //draw player shrinking missile
             if(missile->type == MISSILE_TYPE_PLAYER)
             {
                 lcd_fillCircle(missile->x_current,missile->y_current, missile->radius, CONFIG_COLOR_PLAYER_MISSILE);
             }
+            //draw enemy shrinking missiles
             else if(missile->type == MISSILE_TYPE_ENEMY)
             {
                 lcd_fillCircle(missile->x_current,missile->y_current, missile->radius, CONFIG_COLOR_ENEMY_MISSILE);
             }
+            //draw plane shrinking missile
             else
             {   
                 lcd_fillCircle(missile->x_current,missile->y_current, missile->radius, CONFIG_COLOR_PLANE_MISSILE);
